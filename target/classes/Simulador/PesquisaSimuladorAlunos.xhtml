@@ -1,0 +1,100 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui" template="/templates/Layout.xhtml">
+
+	<ui:define name="content">
+
+		<h1 class="aw-page-title">
+			<i class="fa fa-car"></i> Aulas Simulador
+		</h1>
+
+		<p:separator style="margin:10px 0px;" />
+
+
+		<p:messages id="messages" closable="true">
+			<p:effect type="pulsate" event="load" delay="500" />
+		</p:messages>
+
+	
+
+		<h:form id="frm">
+
+			<div class="panel panel-default">
+				<div class="panel-heading">
+
+
+					<p:button icon="fa fa-university" value="Turmas" outcome="../Turma/Turma.xhtml" styleClass="btn btn-warning btn-sm dropdown-toggle"
+								style="padding:5px;    text-shadow: 0 1px 0 rgba(230, 69, 69, 0); 
+								-moz-box-shadow: inset 0 1px 0 rgba(230, 69, 69, 0);
+   								-webkit-box-shadow: inset 0 1px 0 rgba(230, 69, 69, 0); 
+                                 box-shadow: inset 0 1px 0 rgba(230, 69, 69, 0); " />
+
+				</div>
+			</div>
+
+			<p:dataTable value="#{pesquisaSimuladorBean.listarAlunos}"
+				filteredValue="#{pesquisaSimuladorBean.pesquisaAlunos}"
+				var="aluno" widgetVar="alunoTable"
+				emptyMessage="Nenhum Arquivo Cadastrado...." rows="13"
+				paginator="true" paginatorPosition="bottom" style="margin-top: 10px"
+				id="alunoTable"
+				selection="#{pesquisaSimuladorBean.alunoSelecionado}"
+				selectionMode="single" rowKey="#{aluno.id}">
+
+				<f:facet name="header">
+					<p:outputPanel>
+
+						<p:inputText id="globalFilter"
+							 onkeyup="PF('alunoTable').filter()" style="width:450px"
+							placeholder="Pesquisar" />
+					</p:outputPanel>
+				</f:facet>
+
+				<p:column headerText="Código"
+					style="width:60px; text-align:center;">
+					<h:outputText value="#{aluno.id}" />
+				</p:column>
+
+				<p:column headerText="Aluno" filterBy="#{aluno.nome}">
+				<i class="fa fa-user"  /> <p:spacer style="width:10px" />
+					<h:outputText value="#{aluno.nome}" />
+				</p:column>
+				
+				<p:column headerText="Email" filterBy="#{aluno.nome}">
+				<i class="fa fa-envelope"  /> <p:spacer style="width:10px" />
+					<h:outputText value="#{aluno.email}" />
+				</p:column>
+				
+				<p:column headerText="Whatsapp" filterBy="#{aluno.nome}">
+				<i class="fa fa-whatsapp"  /> <p:spacer style="width:10px" />
+					<h:outputText value="#{aluno.whatsapp}" />
+				</p:column>
+
+
+				<p:column headerText="Agendamento"
+					style="width:250px; text-align:center">
+
+					<p:button outcome="AgendaSimulador.xhtml" value="Agendar"
+						icon="fa fa-calendar" title="Agendamento">
+						<f:param name="aluno" value="#{aluno.id}" />
+					</p:button>
+					<p:spacer style="width:5px;" />
+
+					<p:button outcome="MapaSimulador.xhtml" value="Horário"
+						icon="fa fa-clock-o" title="horario">
+						<f:param name="aluno" value="#{aluno.id}" />
+					</p:button>
+
+
+
+				</p:column>
+
+
+
+			</p:dataTable>
+		</h:form>
+	</ui:define>
+
+</ui:composition>

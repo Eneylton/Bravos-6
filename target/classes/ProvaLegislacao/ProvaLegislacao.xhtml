@@ -1,0 +1,335 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:o="http://omnifaces.org/ui" xmlns:p="http://primefaces.org/ui"
+	template="/templates/Layout.xhtml">
+
+	<ui:define name="content">
+
+		<h1 class="aw-page-title">
+			<i class="fa fa-calendar-check-o" style="color: #5e8dd4;" /> Agendar Exame de Legislação
+		</h1>
+
+		<p:separator style="margin:10px 0px;" />
+
+
+		<h:form id="frm">
+
+			<p:messages id="msgs" closable="true">
+				<p:effect type="pulsate" event="load" delay="500" />
+			</p:messages>
+
+
+			<h:inputHidden id="id"
+				value="#{provalegislacaoBean.provalegislacao.id}" readonly="true" />
+
+			<p:toolbar id="toolbar" style=" background-color:#fff;">
+
+
+				<f:facet name="left">
+					<p:commandButton value="Marcar " icon="fa fa-calendar-check-o" id="btn1"
+						action="#{provaLegislacaoBean.prepararNovoCadastro}"
+						process="@this" update="formulario-dialog"
+						oncomplete="PF('edicaoDialog').show()"
+						styleClass="btn btn-default	 "
+						style="padding:5px;
+                               font-weight: normal !important; 
+                               color: #666 !important;">
+
+						<p:resetInput target="formulario-dialog" />
+					</p:commandButton>
+					<span class="ui-separator"> <span
+						class="ui-icon ui-icon-grip-dotted-vertical" />
+					</span>
+
+
+					<p:commandButton icon="fa fa-pencil-square-o" title="Remacar"
+						value="Remacar" id="btn2" process="@this"
+						update="formulario-dialog" oncomplete="PF('edicaoDialog').show()"
+						disabled="#{provaLegislacaoBean.provalegislacaoSelecionada == null}"
+						styleClass="btn btn-default	 "
+						style="padding:5px;
+                               font-weight: normal !important; 
+                               color: #666 !important;">
+
+						<p:resetInput target="formulario-dialog" />
+
+						<f:setPropertyActionListener
+							value="#{provaLegislacaoBean.provalegislacaoSelecionada}"
+							target="#{provaLegislacaoBean.provalegislacaoEdicao}" />
+					</p:commandButton>
+
+					<p:spacer style="margin-left:10px" />
+
+					<p:commandButton icon="fa fa-calendar-times-o" title="Desmarcar" value="Desmarcar"
+						id="btn3" process="@this"
+						update=":frm:provalegislacaoTable :frm:msgs :frm:toolbar"
+						action="#{provaLegislacaoBean.excluir}"
+						disabled="#{provaLegislacaoBean.provalegislacaoSelecionada == null}"
+						styleClass="btn btn-default	 "
+						style="padding:5px;
+                               font-weight: normal !important; 
+                               color: #666 !important;">
+
+						<p:confirm icon="ui-icon-alert" header="Confirmação de exclusão"
+							message="Tem Certeza que Deseja Excluir esse provalegislacao ?" />
+
+					</p:commandButton>
+
+
+				</f:facet>
+
+				<f:facet name="right">
+					<p:button ajax="false" value="Agendamento" icon="fa fa-calendar" outcome="../CadAgenda/CadAgenda.xhtml"
+						styleClass="btn btn-default"
+						style="padding:5px;
+                               font-weight: normal !important; 
+                               color: #666 !important;" />
+				</f:facet>
+
+
+
+			</p:toolbar>
+			<p:spacer style="margin:5px 0px;" />
+
+
+			<p:dataTable value="#{provaLegislacaoBean.listarProvalegislacaos}"
+				rowsPerPageTemplate="15,20,30" editMode="cell" editable="true"
+				var="provalegislacao" widgetVar="provalegislacaoTable" reflow="true"
+				emptyMessage="Nenhum Arquivo Cadastrado...." rows="10"
+				paginator="true" paginatorPosition="bottom" style="margin-top: 10px"
+				id="provalegislacaoTable"
+				selection="#{provaLegislacaoBean.provalegislacaoSelecionada}"
+				selectionMode="single" rowKey="#{provalegislacao.id}">
+
+				<f:facet name="header" style="width:30px;">
+					<p:outputPanel>
+						<p:spacer style="margin:15px 0px;" />
+
+						<p:inputText id="globalFilter" style="width:350px;"
+							onkeyup="PF('provalegislacaoTable').filter()"
+							placeholder="Pesquisar" />
+					</p:outputPanel>
+				</f:facet>
+
+				<p:ajax event="rowSelect" update=":frm:toolbar" />
+				<p:ajax event="rowUnselect" update=":frm:toolbar" />
+
+				<p:column headerText="Data" sortBy="#{provalegislacao.data}"
+					style="width:40px; text-align:center ">
+					<i class="fa fa-calendar" />
+					<p:spacer style="width:10px;" />
+					<p:outputLabel value="#{provalegislacao.data}">
+						<f:convertDateTime pattern="dd/MM/YYYY" />
+					</p:outputLabel>
+				</p:column>
+
+
+				<p:column headerText="Horário" sortBy="#{provalegislacao.hora}"
+					style="width:30px; ">
+					<i class="fa fa-clock-o" />
+					<p:spacer style="width:10px;" />
+					<p:outputLabel value="#{provalegislacao.hora}">
+						<f:convertDateTime pattern="HH:mm" timeZone="#{initParam.timezone}" />
+					</p:outputLabel>
+				</p:column>
+
+
+				<p:column headerText="Alunos" sortBy="#{provalegislacao.aluno.nome}"
+					style="width:50px; ">
+					<i class="fa fa-user" />
+					<p:spacer style="width:10px;" />
+					<h:outputText value="#{provalegislacao.aluno.nome}" />
+				</p:column>
+
+				<p:column headerText="Email" sortBy="#{provalegislacao.aluno.email}"
+					style="width:60px; ">
+					<i class="fa fa-envelope-o" />
+					<p:spacer style="width:10px;" />
+					<h:outputText value="#{provalegislacao.aluno.email}" />
+				</p:column>
+
+
+				<p:column headerText="Whatsapp"
+					sortBy="#{provalegislacao.aluno.whatsapp}" style="width:60px; ">
+					<i class="fa fa-whatsapp" />
+					<p:spacer style="width:10px;" />
+					<h:outputText value="#{provalegislacao.aluno.whatsapp}" />
+				</p:column>
+
+				<p:column exportable="false" headerText="Previsão"
+					style="width:70px; ">
+					<span class="label label-default"><h:outputText
+							value="Prova Agendada" style="color:#fff; font-size:12px"
+							rendered="#{provalegislacao.dia eq 'Prova Agendada'}" /></span>
+
+					<span class="label label-info"><h:outputText
+							value="Falta apenas um dia !" style="color:#fff; font-size:12px"
+							rendered="#{provalegislacao.dia eq 'Falta apenas um dia !'}" /></span>
+
+					<span class="label label-warning"><h:outputText
+							value="Faltam apenas 02 dias !"
+							style="color:#fff; font-size:12px"
+							rendered="#{provalegislacao.dia eq 'Faltam apenas 02 dias !'}" /></span>
+
+					<span class="label label-warning"><h:outputText
+							value="Faltam apenas 03 dias !"
+							style="color:#fff; font-size:12px"
+							rendered="#{provalegislacao.dia eq 'Faltam apenas 03 dias !'}" /></span>
+
+					<span class="label label-warning"><h:outputText
+							value="Faltam apenas 04 dias !"
+							style="color:#fff; font-size:12px"
+							rendered="#{provalegislacao.dia eq 'Faltam apenas 04 dias !'}" /></span>
+
+					<span class="label label-warning"><h:outputText
+							value="Faltam apenas 05 dias !"
+							style="color:#fff; font-size:12px"
+							rendered="#{provalegislacao.dia eq 'Faltam apenas 05 dias !'}" /></span>
+
+
+					<span class="label label-success"> <h:outputText
+							value="Dia da Prova" style="color:#fff; font-size:12px	"
+							rendered="#{provalegislacao.dia eq 'Dia da Prova'}" /></span>
+
+					<span class="label label-danger"><h:outputText
+							value="Expirou o prazo" style="color:#fff; font-size:12px"
+							rendered="#{provalegislacao.dia eq 'Expirou o prazo'}" /></span>
+
+
+				</p:column>
+
+
+				<p:column headerText="Aprovado" style="width:30px; ">
+
+					<p:cellEditor>
+						<f:facet name="output">
+
+							<span class="label label-default"><h:outputText value="NÃO"
+									style="color:#fff; font-size:12px"
+									rendered="#{provalegislacao.aprovado eq '1'}" /></span>
+
+							<span class="label label-info"><h:outputText
+									style="color:#fff; font-size:11px; padding:10px" value="SIM "
+									rendered="#{provalegislacao.aprovado eq '2'}" /></span>
+
+						</f:facet>
+
+						<f:facet name="input">
+							<p:selectOneMenu value="#{provalegislacao.aprovado}"
+								style="width:80px">
+								<f:selectItem itemLabel="NÃO" itemValue="1" />
+								<f:selectItem itemLabel="SIM" itemValue="2" />
+							</p:selectOneMenu>
+						</f:facet>
+					</p:cellEditor>
+
+
+				</p:column>
+
+
+
+				<p:column headerText="Prova Realizada" style="width:30px; ">
+
+					<p:cellEditor>
+						<f:facet name="output">
+
+							<span class="label label-info"><h:outputText
+									value="SIM" style="color:#fff; font-size:12px"
+									rendered="#{provalegislacao.status eq '1'}" /></span>
+
+							<span class="label label-default"><h:outputText
+									style="color:#fff; font-size:11px; padding:10px" value="NÃO "
+									rendered="#{provalegislacao.status eq '2'}" /></span>
+
+						</f:facet>
+
+						<f:facet name="input">
+							<p:selectOneMenu value="#{provalegislacao.status}"
+								style="width:80px">
+								<f:selectItem itemLabel="SIM" itemValue="1" />
+								<f:selectItem itemLabel="NÃO" itemValue="2" />
+							</p:selectOneMenu>
+						</f:facet>
+					</p:cellEditor>
+
+
+				</p:column>
+
+				<p:ajax event="cellEdit"
+					listener="#{provaLegislacaoBean.editar(provalegislacao)}"
+					update=":frm:msgs :frm:provalegislacaoTable" process="@this" />
+
+			</p:dataTable>
+
+
+			<p:dialog header="Marca Prova" widgetVar="edicaoDialog"
+				styleClass="modal-header" showEffect="fade" hideEffect="explode"
+				id="formulario-dialog" resizable="false" modal="true"
+				closeOnEscape="true">
+
+				<p:messages id="msgs-dialog" closable="true">
+					<p:effect type="pulsate" event="load" delay="500" />
+				</p:messages>
+				<p:defaultCommand target="salvar-button" scope="formulario-dialog" />
+
+				<p:panelGrid columns="2" id="painel-dialog" styleClass="semBorda">
+
+
+
+
+					<p:outputLabel value="Aluno" />
+
+					<p:selectOneMenu id="aluno" style="width:100%;" filter="true"
+						converter="omnifaces.SelectItemsConverter"
+						value="#{provaLegislacaoBean.provalegislacaoEdicao.aluno}">
+						<f:selectItem itemLabel="Selecione um Aluno" />
+						<f:selectItems value="#{provaLegislacaoBean.listarAlunos}"
+							var="var" itemLabel="#{var.nome}" itemValue="#{var}" />
+					</p:selectOneMenu>
+
+
+
+					<p:outputLabel value="Dia da prova" />
+					<p:calendar
+						value="#{provaLegislacaoBean.provalegislacaoEdicao.data}"
+						mode="inline" locale="pt" required="true" pattern="dd/MM/yyyy" />
+
+					<p:outputLabel value="Horário" />
+
+					<p:calendar id="time"
+						value="#{provaLegislacaoBean.provalegislacaoEdicao.hora}"
+						pattern="HH:mm" timeOnly="true" locale="pt" />
+
+
+					<p:outputLabel />
+					<br />
+					<p:commandButton value="Marcar" id="salvar-button"
+						 icon="ui-icon-check"
+						action="#{provaLegislacaoBean.salvar}" process="formulario-dialog"
+						update=":frm:provalegislacaoTable :frm:msgs-dialog :frm:painel-dialog"
+						oncomplete="if (!args.validationFailed) PF('edicaoDialog').hide()"
+						styleClass="btn btn-default	 "
+						style="padding:5px;
+                               font-weight: normal !important; 
+                               color: #666 !important;" />
+
+
+
+				</p:panelGrid>
+			</p:dialog>
+
+		</h:form>
+
+		<h:form>
+			<p:confirmDialog global="true">
+				<p:commandButton value="Não" type="button"
+					styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+
+				<p:commandButton value="Sim" type="button"
+					styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+			</p:confirmDialog>
+		</h:form>
+	</ui:define>
+</ui:composition>

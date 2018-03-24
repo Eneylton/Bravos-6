@@ -1,0 +1,92 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui" template="/templates/Layout.xhtml">
+
+	<ui:define name="content">
+
+		<h1 class="aw-page-title">
+			<i class="fa fa-calculator"></i> Veículo
+		</h1>
+
+		<p:separator style="margin:-20px 0px;" />
+
+
+		<p:messages id="messages" closable="true">
+			<p:effect type="pulsate" event="load" delay="500" />
+		</p:messages>
+
+		<p:spacer style="margin:5px 0px;" />
+
+		<h:form id="frm">
+
+
+			<p:button icon="fa fa-check" value="Novo" styleClass="btn btn-info"
+				outcome="Carro" />
+
+
+			<p:spacer style="margin-top:60px;" />
+
+
+			<p:dataTable id="carroTable" var="carro"
+				value="#{pesquisaCarroBean.listaCarros}" paginatorPosition="bottom"
+				paginator="true" emptyMessage="Nenhum carro encontrado." rows="12">
+
+				<p:column headerText="Código" style="width:80px; text-align:center;">
+					<h:outputText value="#{carro.id}" />
+				</p:column>
+
+				<p:column headerText="Veiculo" filterBy="#{carro.foto}">
+				<h:graphicImage value="../resources/img/#{carro.foto}" style="width:90px; height:50px" />
+				</p:column>
+				
+				<p:column headerText="Fabricante" filterBy="#{carro.veiculo.fabricante}">
+					<h:outputText value="#{carro.veiculo.fabricante}" />
+				</p:column>
+				
+				<p:column headerText="Modelo" filterBy="#{carro.veiculo.modelo}">
+					<h:outputText value="#{carro.veiculo.modelo}" />
+				</p:column>
+
+				<p:column style="width: 160px; text-align: center"
+					headerText="Ações">
+
+				
+					<p:button outcome="Carro" icon="fa fa-pencil"
+						title="Editar">
+						<f:param name="carro" value="#{carro.id}" />
+					</p:button>
+
+
+					<p:commandButton icon="fa fa-trash" title="Excluir"
+						oncomplete="PF('confirmacaoExclusao').show()" process="@this"
+						update=":frm:confirmacaoExclusaoDialog">
+						<f:setPropertyActionListener
+							target="#{pesquisaCarroBean.carroSelecionado}"
+							value="#{carro}" />
+					</p:commandButton>
+				</p:column>
+
+
+
+			</p:dataTable>
+
+
+
+			<p:confirmDialog id="confirmacaoExclusaoDialog"
+				widgetVar="confirmacaoExclusao"
+				message="Tem certeza que deseja excluir o Usuário #{pesquisaCarroBean.carroSelecionado.foto} ?"
+				header="Exclusão de carro" severity="alert">
+				<p:button value="Não"
+					onclick="PF('confirmacaoExclusao').hide(); return false;" />
+				<p:commandButton value="Sim" update=":frm:carroTable"
+					onclick="confirmacaoExclusao.hide()"
+					action="#{pesquisaCarroBean.excluir}" />
+			</p:confirmDialog>
+
+
+		</h:form>
+	</ui:define>
+
+</ui:composition>

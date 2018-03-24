@@ -1,0 +1,276 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui" xmlns:o="http://omnifaces.org/ui"
+	template="/templates/Layout.xhtml">
+
+
+	<ui:define name="content">
+		<f:metadata>
+			<f:viewParam name="dummy" />
+			<o:viewParam name="aluno" value="#{cadastroAlunoBean.aluno}" />
+		</f:metadata>
+
+		<h1 class="aw-page-title">
+			<i class="fa fa-graduation-cap"></i> Aluno
+		</h1>
+
+		<p:separator style="margin:10px 0px;" />
+
+
+		<h:form id="frm" prependId="false">
+
+			<p:messages id="messages" closable="true">
+				<p:effect type="pulsate" event="load" delay="500" />
+			</p:messages>
+
+			<h:inputHidden id="id" value="#{cadastroAlunoBean.aluno.id}"
+				readonly="true" />
+
+			<h:inputHidden id="latitude"
+				value="#{cadastroAlunoBean.aluno.latitude}" readonly="true" />
+
+			<h:inputHidden id="longitude"
+				value="#{cadastroAlunoBean.aluno.longitude}" readonly="true" />
+
+
+
+			<div class="panel panel-default">
+				<div class="panel-heading">
+
+					<p:commandButton value="Salvar" icon="fa fa-plus" ajax="false"
+						action="#{cadastroAlunoBean.salvar}"
+						styleClass="btn btn-info btn-sm dropdown-toggle"
+						style="padding:5px;    text-shadow: 0 1px 0 rgba(230, 69, 69, 0); 
+								-moz-box-shadow: inset 0 1px 0 rgba(230, 69, 69, 0);
+   								-webkit-box-shadow: inset 0 1px 0 rgba(230, 69, 69, 0); 
+                                 box-shadow: inset 0 1px 0 rgba(230, 69, 69, 0); " />
+
+
+
+
+					<div class="pull-right">
+						<div class="btn-group">
+
+							<p:button type="button" value="Pesquisar" outcome="PesquisaAluno"
+								icon="fa fa-search"
+								styleClass="btn btn-success btn-sm dropdown-toggle"
+								style="padding:5px;    text-shadow: 0 1px 0 rgba(230, 69, 69, 0); 
+								-moz-box-shadow: inset 0 1px 0 rgba(230, 69, 69, 0);
+   								-webkit-box-shadow: inset 0 1px 0 rgba(230, 69, 69, 0); 
+                                 box-shadow: inset 0 1px 0 rgba(230, 69, 69, 0); " />
+
+
+						</div>
+					</div>
+
+
+
+				</div>
+			</div>
+
+			<hr />
+
+
+			<div class="panel panel-info">
+				<div class="panel-heading">
+					<i class="fa fa-graduation-cap" /> Cadastre um novo aluno.
+				</div>
+
+				<div class="panel-body">
+					<div id="morris-line-chart">
+
+						<p:panelGrid columns="6" styleClass="semBorda">
+
+							<p:outputLabel value="Nome" />
+
+							<p:inputText styleClass="form-control" maxlength="255"
+								value="#{cadastroAlunoBean.aluno.nome}" required="true" />
+
+
+							<p:outputLabel value="Sobrenome" />
+
+							<p:inputText styleClass="form-control" maxlength="255"
+								value="#{cadastroAlunoBean.aluno.sobreNome}" required="true" />
+
+
+							<p:outputLabel value="Pai" />
+
+							<p:inputText styleClass="form-control" maxlength="255"
+								value="#{cadastroAlunoBean.aluno.pai}" />
+
+
+							<p:outputLabel value="Mae" />
+
+							<p:inputText styleClass="form-control" maxlength="255"
+								value="#{cadastroAlunoBean.aluno.mae}" />
+
+
+							<p:outputLabel value="Nascimento" />
+
+							<p:calendar styleClass="form-control" maxlength="255"
+								value="#{cadastroAlunoBean.aluno.dataNascimento}"
+								required="true" pattern="dd/MM/yyyy" />
+
+
+							<p:outputLabel value="Renach" />
+
+							<p:inputText styleClass="form-control" maxlength="255"
+								value="#{cadastroAlunoBean.aluno.renach}" />
+
+
+							<p:outputLabel value="Rg" />
+
+							<p:inputText styleClass="form-control" maxlength="255"
+								value="#{cadastroAlunoBean.aluno.rg}" />
+
+							<p:outputLabel value="Cpf" />
+
+							<p:inputText styleClass="form-control" maxlength="255"
+								value="#{cadastroAlunoBean.aluno.cpf}" />
+
+
+							<p:outputLabel value="Cnh" />
+
+							<p:inputText styleClass="form-control" maxlength="255"
+								value="#{cadastroAlunoBean.aluno.cnh}" />
+
+							<p:outputLabel value="Email" />
+
+							<p:inputText styleClass="form-control" maxlength="255"
+								value="#{cadastroAlunoBean.aluno.email}" />
+
+
+							<p:outputLabel value="Telefone Fixo" />
+
+							<p:inputText styleClass="form-control" maxlength="255"
+								value="#{cadastroAlunoBean.aluno.fixo}" />
+
+
+							<p:outputLabel value="Whatsapp" />
+
+							<p:inputText styleClass="form-control" maxlength="255"
+								value="#{cadastroAlunoBean.aluno.whatsapp}" />
+
+
+							<p:outputLabel value="Sexo" />
+
+							<p:selectOneMenu id="sexo" style="width:100%;"
+								converter="omnifaces.SelectItemsConverter"
+								value="#{cadastroAlunoBean.aluno.sexo}">
+								<f:selectItem itemLabel="Selecione o Sexo" />
+								<f:selectItems value="#{cadastroAlunoBean.listarSexos}"
+									var="var" itemLabel="#{var.descricao}" itemValue="#{var}" />
+							</p:selectOneMenu>
+
+
+
+							<p:outputLabel value="Serviços" />
+							<p:selectOneMenu id="idservico" style="width:100%;" filter="true"
+								converter="omnifaces.SelectItemsConverter"
+								value="#{cadastroAlunoBean.aluno.servico}">
+								<f:selectItem itemLabel="Selcione o Serviço" />
+								<f:selectItems value="#{cadastroAlunoBean.listarServicos}"
+									var="var" itemLabel="#{var.descricao}" itemValue="#{var}" />
+							</p:selectOneMenu>
+
+							<p:outputLabel value="Foto" />
+
+							<p:fileUpload
+								fileUploadListener="#{cadastroAlunoBean.handleFileUpload}"
+								label="Foto" auto="true" mode="advanced" dragDropSupport="false"
+								sizeLimit="5000000" fileLimit="1"
+								allowTypes="/(\.|\/)(jpg|png)$/" />
+
+
+
+
+
+
+						</p:panelGrid>
+
+						<hr />
+
+						<div class="row">
+
+							<div class="col-md-12">
+							
+							
+								<div class="panel with-nav-tabs panel-info">
+						<div class="panel-heading">
+							<ul class="nav nav-tabs">
+
+								<li class="active"><a href="#tab1" data-toggle="tab"><i
+										class="fa fa-calendar" /> Consulta por Período</a></li>
+
+								<li><a href="#tab2" data-toggle="tab"><i
+										class="fa fa-plus-circle" style="color:blue" /> Caixa </a></li>
+
+								<li><a href="#tab3" data-toggle="tab"><i
+										class="fa fa-minus-circle" style="color: #ff0000" /> Despesas Interna</a></li>
+
+								<li><a href="#tab4" data-toggle="tab"><i
+										class="fa fa-plus-circle" style="color: #38ca9a" /> Investimentos
+										</a></li>
+
+								<li><a href="#tab5" data-toggle="tab"><i
+										class="fa fa-minus-circle" style="color: #f44336" /> Prejuizos
+										</a></li>
+
+
+							</ul>
+						</div>
+
+						<div class="panel-body">
+							<div class="tab-content">
+
+
+								<div class="tab-pane fade in active" id="tab1">
+									oook1
+								</div>
+
+								<div class="tab-pane fade" id="tab2">
+
+								oook2
+								</div>
+
+								<div class="tab-pane fade" id="tab3">
+
+								ook3
+								</div>
+
+
+								<div class="tab-pane fade" id="tab4">
+
+									ook4
+								</div>
+
+							</div>
+						</div>
+					</div>
+							
+							
+								
+							</div>
+						</div>
+
+
+
+
+					</div>
+				</div>
+
+			</div>
+
+
+
+
+
+
+		</h:form>
+
+
+	</ui:define>
+
+</ui:composition>

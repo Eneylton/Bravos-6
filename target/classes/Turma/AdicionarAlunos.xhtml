@@ -1,0 +1,107 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui" xmlns:o="http://omnifaces.org/ui"
+	template="/templates/Layout.xhtml">
+
+
+	<ui:define name="content">
+		<f:metadata>
+			<o:viewParam name="turma" value="#{cadastroTurmAlunoBean.turma}" />
+		</f:metadata>
+
+		<h1 class="aw-page-title">
+			<i class="fa fa-user-plus" /> Adicionar Alunos
+		</h1>
+
+		<p:separator style="margin:-10px 0px;" />
+
+
+		<h:form id="frm" prependId="false">
+
+
+
+			<p:messages id="messages" closable="true">
+				<p:effect type="pulsate" event="load" delay="500" />
+			</p:messages>
+
+	<p:spacer />
+
+			<h:inputHidden id="id" value="#{cadastroTurmAlunoBean.turma.id}"
+				readonly="true" />
+
+			<div class="panel panel-default">
+				<div class="panel-heading">
+
+					<p:commandButton ajax="false" value="Adicionar" icon="fa fa-user-plus"
+						action="#{cadastroTurmAlunoBean.salvar}" 
+						styleClass="btn btn-info btn-sm dropdown-toggle"
+						style="padding:5px;    text-shadow: 0 1px 0 rgba(230, 69, 69, 0); 
+								-moz-box-shadow: inset 0 1px 0 rgba(230, 69, 69, 0);
+   								-webkit-box-shadow: inset 0 1px 0 rgba(230, 69, 69, 0); 
+                                 box-shadow: inset 0 1px 0 rgba(230, 69, 69, 0); " />
+
+
+					<div class="pull-right">
+						<div class="btn-group">
+							<p:button type="button" value="Pesquisar" icon="fa fa-search"
+								outcome="Turma"
+								styleClass="btn btn-success btn-sm dropdown-toggle"
+								style="padding:5px;    text-shadow: 0 1px 0 rgba(230, 69, 69, 0); 
+								-moz-box-shadow: inset 0 1px 0 rgba(230, 69, 69, 0);
+   								-webkit-box-shadow: inset 0 1px 0 rgba(230, 69, 69, 0); 
+                                 box-shadow: inset 0 1px 0 rgba(230, 69, 69, 0); " />
+
+
+						</div>
+					</div>
+				</div>
+			</div>
+
+
+
+
+
+			<p:dataTable id="dt" var="aluno" paginatorPosition="bottom"
+				paginator="true" rows="10" widgetVar="tabAluno"
+				value="#{cadastroTurmAlunoBean.alunos}"
+				filteredValue="#{cadastroTurmAlunoBean.pesquisAlunos}"
+				selection="#{cadastroTurmAlunoBean.alunosSelecionados}"
+				rowKey="#{aluno.id}">
+
+				<f:facet name="header">
+					<p:outputPanel>
+
+						<p:inputText id="globalFilter" onkeyup="PF('tabAluno').filter()"
+							style="width:450px" placeholder="Pesquisar" />
+					</p:outputPanel>
+				</f:facet>
+
+
+				<p:column selectionMode="multiple"
+					style="width:80px; text-align:center" />
+
+
+				<p:column headerText="Alunos" filterBy="#{aluno.nome}"
+					filterable="#{aluno.nome}">
+					<i class="fa fa-user"></i>
+					<p:spacer style="width:10px;" />
+					<h:outputText value="#{aluno.nome}" />
+				</p:column>
+
+
+
+			</p:dataTable>
+
+
+
+
+
+		</h:form>
+
+
+	</ui:define>
+
+
+</ui:composition>

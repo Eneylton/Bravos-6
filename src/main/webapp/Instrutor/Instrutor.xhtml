@@ -1,0 +1,127 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:o="http://omnifaces.org/ui" xmlns:p="http://primefaces.org/ui"
+	template="/templates/Layout.xhtml">
+
+	<ui:define name="content">
+		<f:metadata>
+			<o:viewParam name="instrutor"
+				value="#{cadastroInstrutorBean.instrutor}" />
+		</f:metadata>
+
+
+		<h1 class="aw-page-title">
+			<i class="fa fa-black-tie"></i> Instrutor
+		</h1>
+
+		<p:separator style="margin:-10px 0px;" />
+
+		<h:form id="frm" prependId="false">
+			<p:messages id="messages" closable="true">
+				<p:effect type="pulsate" event="load" delay="500" />
+			</p:messages>
+
+			<p:spacer />
+
+			<div class="panel panel-default">
+				<div class="panel-heading">
+
+					<p:commandButton ajax="false" value="Cadastrar" icon="fa fa-check"
+						action="#{cadastroInstrutorBean.salvar}"
+						styleClass="btn btn-info btn-sm dropdown-toggle"
+						style="padding:5px;    text-shadow: 0 1px 0 rgba(230, 69, 69, 0); 
+								-moz-box-shadow: inset 0 1px 0 rgba(230, 69, 69, 0);
+   								-webkit-box-shadow: inset 0 1px 0 rgba(230, 69, 69, 0); 
+                                 box-shadow: inset 0 1px 0 rgba(230, 69, 69, 0); " />
+
+					<div class="pull-right">
+						<div class="btn-group">
+							<p:button type="button" value="Pesquisar" icon="fa fa-search"
+								outcome="PesquisaInstrutor"
+								styleClass="btn btn-success btn-sm dropdown-toggle"
+								style="padding:5px;    text-shadow: 0 1px 0 rgba(230, 69, 69, 0); 
+								-moz-box-shadow: inset 0 1px 0 rgba(230, 69, 69, 0);
+   								-webkit-box-shadow: inset 0 1px 0 rgba(230, 69, 69, 0); 
+                                 box-shadow: inset 0 1px 0 rgba(230, 69, 69, 0); " />
+
+
+						</div>
+					</div>
+				</div>
+			</div>
+			<hr />
+
+
+
+			<div class="panel panel-info">
+				<div class="panel-heading">
+					<i class="fa fa-unlock-alt" /> Cadastre um novo Instrutor.
+				</div>
+
+				<div class="panel-body">
+					<div id="morris-line-chart">
+
+						<p:panelGrid columns="4" styleClass="semBorda">
+
+							<p:outputLabel value="Instrutor" />
+
+							<p:inputText styleClass="form-control" maxlength="255"
+								value="#{cadastroInstrutorBean.instrutor.nome}" required="true" />
+
+
+							<p:outputLabel value="Sexo" />
+
+							<p:selectOneMenu id="sexo" style="width:100%;"
+								converter="omnifaces.SelectItemsConverter"
+								value="#{cadastroInstrutorBean.instrutor.sexo}">
+								<f:selectItem itemLabel="Selecione o Sexo" />
+								<f:selectItems value="#{cadastroInstrutorBean.listarSexos}"
+									var="var" itemLabel="#{var.descricao}" itemValue="#{var}" />
+							</p:selectOneMenu>
+
+
+							<p:outputLabel value="Tipo" />
+
+							<p:selectOneMenu id="tipo"
+								converter="omnifaces.SelectItemsConverter"
+								value="#{cadastroInstrutorBean.tipoVei}" style="width:300px;">
+
+								<f:selectItem itemLabel="Selecione o Tipo" />
+								<f:selectItems
+									value="#{cadastroInstrutorBean.listarTipoVeiculos}" var="var"
+									itemLabel="#{var.descricao}" itemValue="#{var}" />
+
+								<p:ajax listener="#{cadastroInstrutorBean.popular}"
+									update=":frm:marca" />
+							</p:selectOneMenu>
+
+
+
+							<p:outputLabel value="Marca" />
+
+
+							<p:selectOneMenu id="marca" style="width:100%;"
+								converter="omnifaces.SelectItemsConverter"
+								value="#{cadastroInstrutorBean.instrutor.fabricante}">
+								<f:selectItem itemLabel="Selecione a Marca / Modelo" />
+								<f:selectItems
+									value="#{cadastroInstrutorBean.listarFabricantes}" var="var"
+									itemLabel="#{var.modelo}" itemValue="#{var}" />
+							</p:selectOneMenu>
+
+
+
+						</p:panelGrid>
+
+					</div>
+				</div>
+			</div>
+
+
+		</h:form>
+
+	</ui:define>
+
+</ui:composition>

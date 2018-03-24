@@ -1,0 +1,281 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui" xmlns:o="http://omnifaces.org/ui"
+	template="/templates/Layout.xhtml">
+
+
+	<ui:define name="content">
+		<f:metadata>
+			<o:viewParam name="turma" value="#{cadastroTurmaBean.turma}" />
+
+		</f:metadata>
+
+		<h1 class="aw-page-title">
+			<i class="fa fa-text-width" /> Turma
+		</h1>
+
+		<p:separator style="margin:-10px 0px;" />
+
+
+		<h:form id="frm" prependId="false">
+
+			<p:messages id="msgs" closable="true">
+				<p:effect type="pulsate" event="load" delay="500" />
+			</p:messages>
+
+
+			<h:inputHidden id="idturma" value="#{cadastroTurmaBean.turma.id}"
+				readonly="true" />
+
+			<p:toolbar id="toolbar" style="margin-top: 20px">
+				<p:toolbarGroup>
+					<p:commandButton value="Nova" icon="fa fa-plus"
+						action="#{cadastroTurmaBean.prepararNovoCadastro}" process="@this"
+						update="formulario-dialog" oncomplete="PF('edicaoDialog').show()"
+						styleClass="btn btn-default"
+						style="padding:5px;
+                               font-weight: normal !important; 
+                               color: #666 !important;">
+
+						<p:resetInput target="formulario-dialog" />
+					</p:commandButton>
+
+					<span class="ui-separator"> <span
+						class="ui-icon ui-icon-grip-dotted-vertical" />
+					</span>
+
+					<p:commandButton icon="fa fa-pencil" title="Editar" value="Editar"
+						process="@this" update="formulario-dialog"
+						oncomplete="PF('edicaoDialog').show()"
+						disabled="#{cadastroTurmaBean.turmaSelecionada == null}"
+						styleClass="btn btn-default"
+						style="padding:5px;
+                               font-weight: normal !important; 
+                               color: #666 !important;">
+
+						<p:resetInput target="formulario-dialog" />
+
+
+						<f:setPropertyActionListener
+							value="#{cadastroTurmaBean.turmaSelecionada}"
+							target="#{cadastroTurmaBean.turmaEdicao}" />
+					</p:commandButton>
+
+					<p:spacer style="margin-left:10px" />
+
+
+					<p:commandButton icon="fa fa-trash" title="Excluir" value="Excluir"
+						process="@this" update=":frm:turmaTable :frm:msgs :frm:toolbar"
+						
+						actionListener="#{cadastroTurmaBean.excluir}"
+							action="Turma.xhtml?faces-redirect=true"
+						
+				
+						disabled="#{cadastroTurmaBean.turmaSelecionada == null}"
+						styleClass="btn btn-default"
+						style="padding:5px;
+                               font-weight: normal !important; 
+                               color: #666 !important;">
+
+						<p:confirm icon="ui-icon-alert" header="Confirmação de exclusão"
+							message="Tem Certeza que Deseja Excluir essa Turma ?"
+							styleClass="btn btn-default	 "
+							style="padding:5px;
+                               font-weight: normal !important; 
+                               color: #666 !important;" />
+
+					</p:commandButton>
+
+
+
+				</p:toolbarGroup>
+
+
+			</p:toolbar>
+			<p:spacer style="margin:5px 0px;" />
+
+
+			<p:dataTable value="#{cadastroTurmaBean.listarTurmas}"
+				scrollable="false" scrollWidth="100%" scrollHeight="150"
+				filteredValue="#{cadastroTurmaBean.pesquisaTurmas}" var="turma"
+				widgetVar="turmaTable" emptyMessage="Nenhum Arquivo Cadastrado...."
+				rows="13" paginator="true" paginatorPosition="bottom"
+				style="margin-top: 10px" id="turmaTable"
+				selection="#{cadastroTurmaBean.turmaSelecionada}"
+				selectionMode="single" rowKey="#{turma.id}">
+
+				<f:facet name="header">
+					<p:outputPanel>
+
+						<p:inputText id="globalFilter" onkeyup="PF('turmaTable').filter()"
+							style="width:450px" placeholder="Pesquisar" />
+					</p:outputPanel>
+				</f:facet>
+
+				<p:ajax event="rowSelect" update=":frm:toolbar" />
+				<p:ajax event="rowUnselect" update=":frm:toolbar" />
+
+
+				<p:column style="width:120px; text-align:left;" headerText="Turma"
+					sortBy="#{turma.descricao}" filterBy="#{turma.descricao}"
+					filterable="#{turma.descricao}">
+					<h:outputText value="#{turma.descricao}" />
+				</p:column>
+
+				<p:column style="width:90px; text-align:center;" headerText="Início"
+					filterBy="#{turma.inicio}" filterable="#{turma.inicio}">
+					<p:outputLabel value="#{turma.inicio}">
+						<f:convertDateTime pattern="dd/MM/yyy" />
+					</p:outputLabel>
+				</p:column>
+
+				<p:column style="width:90px; text-align:center;" headerText="Fim"
+					filterBy="#{turma.fim}" filterable="#{turma.fim}">
+					<p:outputLabel value="#{turma.fim}">
+						<f:convertDateTime pattern="dd/MM/yyy" />
+					</p:outputLabel>
+				</p:column>
+
+
+				<p:column style="width:90px; text-align:left;" headerText="Turno"
+					filterBy="#{turma.turno}" filterable="#{turma.turno}">
+					<h:outputText value="#{turma.turno}" />
+				</p:column>
+
+				<p:column style="width:170px; text-align:left;"
+					headerText="Professor" filterBy="#{turma.professor.nome}"
+					filterable="#{turma.professor.nome}">
+					<p:outputLabel value="#{turma.professor.nome}" />
+				</p:column>
+
+
+				<p:column style="width:130px; text-align:center;" headerText="Total"
+					filterBy="#{turma.professor.nome}"
+					filterable="#{turma.professor.nome}">
+
+					<p:progressBar value="#{turma.totalAlunos}"
+						labelTemplate="{value} %" ajax="true" styleClass="animated"
+						displayOnly="true" />
+				</p:column>
+
+
+				<p:column headerText="Lista / Adicionar "
+					style="width: 120px; text-align: center">
+
+					<p:button outcome="ListaPresenca.xhtml" icon="fa fa-tasks"
+						title="Aluno">
+						<f:param name="turma" value="#{turma.id}" />
+					</p:button>
+
+					<p:spacer style="width:10px" />
+
+					<p:button outcome="AdicionarAlunos.xhtml"
+						icon="fa fa-fw fa-user-plus" title="Aluno" value="Add">
+						<f:param name="turma" value="#{turma.id}" />
+					</p:button>
+
+
+				</p:column>
+
+
+
+			</p:dataTable>
+
+
+		
+			<p:dialog header="Nova Turma" widgetVar="edicaoDialog"
+				id="formulario-dialog" resizable="false" modal="true"
+				closeOnEscape="true">
+
+				<p:messages id="msgs-dialog" closable="true">
+					<p:effect type="pulsate" event="load" delay="500" />
+				</p:messages>
+				<p:defaultCommand target="salvar-button" scope="formulario-dialog" />
+
+				<p:panelGrid columns="2" id="painel-dialog" styleClass="semBorda">
+
+								<p:outputLabel value="Data Início" />
+
+								<p:calendar id="inicio"  maxlength="80" effect="drop" showOn="button"
+									pattern="dd/MM/yyyy"
+									value="#{cadastroTurmaBean.turmaEdicao.inicio}" required="true" />
+								
+										
+
+								<p:outputLabel value="Data Fim" />
+
+								<p:calendar id="fim"  maxlength="80" effect="drop" showOn="button"
+									pattern="dd/MM/yyyy"
+									value="#{cadastroTurmaBean.turmaEdicao.fim}" required="true" />
+							
+										
+
+								<p:outputLabel value="Descricao" />
+
+								<p:inputText id="titulo" size="60" maxlength="80"
+									styleClass="form-control"
+									value="#{cadastroTurmaBean.turmaEdicao.descricao}"
+									required="true" />
+							
+
+								<p:outputLabel value="Turno" />
+
+								<p:selectOneMenu value="#{cadastroTurmaBean.turmaEdicao.turno}">
+
+									<f:selectItem itemLabel="Selecione o turno" itemValue="" />
+									<f:selectItem itemLabel="Matutino" itemValue="Matutino" />
+									<f:selectItem itemLabel="Vespertino" itemValue="Vespertino" />
+									<f:selectItem itemLabel="Noturno" itemValue="Noturno" />
+
+								</p:selectOneMenu>
+
+
+							<p:outputLabel value="Professor" />
+								<p:selectOneMenu id="prof" style="width:100%;"
+									value="#{cadastroTurmaBean.turmaEdicao.professor}">
+									<f:selectItem itemLabel="Selecione o Professor" />
+									<f:selectItems value="#{cadastroTurmaBean.listarProfessores}"
+										var="var" itemLabel="#{var.nome}" itemValue="#{var}" />
+								</p:selectOneMenu>
+
+							
+							
+
+
+						<p:outputLabel />
+						<br />
+
+						<p:commandButton value="Salvar" id="salvar-button"
+							icon="fa fa-check" actionListener="#{cadastroTurmaBean.salvar}"
+							action="Turma.xhtml?faces-redirect=true"
+							process="formulario-dialog"
+							update=":frm:turmaTable :frm:msgs :frm:msgs-dialog :frm:painel-dialog "
+							oncomplete="if (!args.validationFailed) PF('edicaoDialog').hide()"
+							styleClass="btn btn-default	 "
+							style="padding:5px;
+                               font-weight: normal !important; 
+                               color: #666 !important;" />
+
+					
+
+				</p:panelGrid>
+			</p:dialog>
+
+		</h:form>
+
+		<h:form>
+			<p:confirmDialog global="true">
+				<p:commandButton value="Não" type="button"
+					styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+
+				<p:commandButton value="Sim" type="button"
+					styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+			</p:confirmDialog>
+		</h:form>
+
+
+	</ui:define>
+
+</ui:composition>

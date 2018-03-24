@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html SYSTEM "about:legacy-compat">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:graphicImage library="img" name="logo.png"
+	style="float: left;
+    line-height: 66px;
+    margin-left: 16px;
+    height: 31px;
+    width: 143px;" />
+<a href="#" class="aw-toggle  js-toggle"><i class="fa  fa-bars"></i></a>
+
+
+<div style="float: right; margin: 15px 20px;" id="noprint">
+
+	<h:link>
+		<i class="fa fa-user"></i>  #{layoutBean.usuarioLogado}</h:link>
+
+	<p:spacer style="margin-left:20px;" />
+	
+	<h:link outcome="../Usuario/AlterarSenhaUsuarioLogado.xhtml">
+			<i class="fa fa-fw  fa-unlock-alt"></i> Alterar Senha</h:link>
+
+		<p:spacer style="margin-left:20px;" />
+
+	<a href="../Usuario/Logout.xhtml"> <i class="fa fa-power-off"></i>
+		Sair
+	</a>
+
+
+	
+</div>
+
+<br />
+
+	<div style="margin: 0px 0px 0px 1160px; width: 22px; height: 14px;">
+
+		<p:ajaxStatus styleClass="ajax-status">
+			<f:facet name="start">
+				<img style="margin-top: 12px;"
+					src="../resources/img/Preloader_1.gif" />
+			</f:facet>
+			<f:facet name="complete">
+				<h:outputText value="" />
+			</f:facet>
+		</p:ajaxStatus>
+
+	</div>
+</html>

@@ -1,0 +1,98 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui" template="/templates/Layout.xhtml">
+
+	<ui:define name="content">
+
+		<h1 class="aw-page-title">
+			<i class="fa fa-calculator"></i> Caixa - Investimentos
+		</h1>
+
+		<p:separator style="margin:10px 0px;" />
+
+
+		<p:messages id="messages" closable="true">
+			<p:effect type="pulsate" event="load" delay="500" />
+		</p:messages>
+
+		<p:spacer style="margin:5px 0px;" />
+
+		<h:form id="frm">
+		
+		
+			<div class="panel panel-default">
+				<div class="panel-heading">
+
+
+			<p:button icon="fa fa-check" value="Novo" 
+				outcome="Caixa" styleClass="btn btn-info btn-sm dropdown-toggle"
+						style="padding:5px;    text-shadow: 0 1px 0 rgba(230, 69, 69, 0); 
+								-moz-box-shadow: inset 0 1px 0 rgba(230, 69, 69, 0);
+   								-webkit-box-shadow: inset 0 1px 0 rgba(230, 69, 69, 0); 
+                                 box-shadow: inset 0 1px 0 rgba(230, 69, 69, 0); " />
+
+				
+				</div>
+				</div>
+
+			<p:dataTable id="caixaTable" var="caixa"
+				value="#{pesquisaCaixaBean.listaCaixas}" paginatorPosition="bottom"
+				paginator="true" emptyMessage="Nenhum caixa encontrado." rows="12">
+
+				<p:column headerText="caixa" style="width:80px; text-align:center;">
+					<h:outputText value="#{caixa.id}" />
+				</p:column>
+
+				<p:column headerText="caixa" filterBy="#{caixa.descricao}">
+					<h:outputText value="#{caixa.descricao}" />
+				</p:column>
+
+				<p:column style="width: 160px; text-align: center"
+					headerText="Ações">
+
+				
+					<p:button outcome="Caixa" icon="fa fa-pencil"
+						title="Editar">
+						<f:param name="caixa" value="#{caixa.id}" />
+					</p:button>
+
+
+					<p:commandButton icon="fa fa-trash" title="Excluir"
+						oncomplete="PF('confirmacaoExclusao').show()" process="@this"
+						update=":frm:confirmacaoExclusaoDialog">
+						<f:setPropertyActionListener
+							target="#{pesquisaCaixaBean.caixaSelecionado}"
+							value="#{caixa}" />
+					</p:commandButton>
+				</p:column>
+
+
+
+			</p:dataTable>
+
+
+
+			<p:confirmDialog id="confirmacaoExclusaoDialog"
+				widgetVar="confirmacaoExclusao"
+				message="Tem certeza que deseja excluir o Usuário #{pesquisaCaixaBean.caixaSelecionado.descricao} ?"
+				header="Exclusão de caixa" severity="alert">
+				<p:button value="Não"
+					onclick="PF('confirmacaoExclusao').hide(); return false;" />
+				<p:commandButton value="Sim" update=":frm:caixaTable"
+					onclick="confirmacaoExclusao.hide()"
+					action="#{pesquisaCaixaBean.excluir}" />
+			</p:confirmDialog>
+
+
+
+
+
+
+
+
+		</h:form>
+	</ui:define>
+
+</ui:composition>

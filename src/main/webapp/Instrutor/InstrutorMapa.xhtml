@@ -1,0 +1,197 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:o="http://omnifaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui" template="/templates/Layout.xhtml">
+
+	<ui:define name="content">
+
+		<f:metadata>
+
+			<o:viewParam name="instrutor"
+				value="#{cadastroInstrutorBean.instrutor}" />
+
+		</f:metadata>
+
+		<h1 class="aw-page-title">
+			<i class="fa fa-calendar"></i> Agenda do Instrutor
+		</h1>
+
+		<p:separator style="margin:-10px 0px;" />
+
+
+		<h:form id="frm" prependId="false">
+
+
+			<p:messages id="messages" closable="true">
+				<p:effect type="pulsate" event="load" delay="500" />
+			</p:messages>
+
+
+			<p:spacer style="margin-top: 20px;" />
+
+			<p:toolbar>
+				<f:facet name="left">
+					<p:commandButton value="Imprimir" icon="fa fa-print"
+						action="#{cadastroInstrutorBean.gerarRelatorio}" />
+				</f:facet>
+
+				<f:facet name="right">
+
+					<p:commandButton ajax="false" value="Download PDF"
+						icon="fa fa-download" immediate="true">
+
+						<p:dataExporter type="pdf" target="tabAluno"
+							fileName="HorarioAlunos"
+							preProcessor="#{mapaInstrutorBean.custumizandoPDF}" />
+					</p:commandButton>
+
+
+					<span class="ui-separator"> <span
+						class="ui-icon ui-icon-grip-dotted-vertical" />
+					</span>
+
+
+					<p:commandButton ajax="false" value="Download Excel"
+						icon="fa fa-download" iconPos="right" immediate="true">
+
+						<p:dataExporter type="xls" target="tabAluno"
+							fileName="HorarioAlunos"
+							postProcessor="#{mapaInstrutorBean.custumizadoXLS}" />
+					</p:commandButton>
+
+
+				</f:facet>
+			</p:toolbar>
+
+			<hr />
+
+			<div class="row">
+
+
+				<div class="col-md-6">
+
+					<div class="panel panel-info">
+						<div class="panel-heading">
+							<h3 class="panel-title">
+								<i class="fa fa-calendar" />
+								<p:spacer style="margin-left:10px" />
+								Resumo Geral
+							</h3>
+						</div>
+						<div class="panel-body">
+
+							<p:panelGrid columns="3" styleClass="semBorda">
+
+								<i class="fa fa-user" />
+
+								<p:outputLabel value="Nome:" />
+
+								<p:outputLabel value="#{cadastroInstrutorBean.instrutor.nome}" />
+
+								<i class="fa fa-car" />
+
+								<p:outputLabel value="Veículo:" />
+
+								<p:outputLabel
+									value="#{cadastroInstrutorBean.instrutor.fabricante.marca} - #{cadastroInstrutorBean.instrutor.fabricante.modelo}" />
+
+							</p:panelGrid>
+
+							<hr />
+
+
+							<p:panelGrid columns="3" styleClass="semBorda">
+								<i class="fa fa-image" />
+
+								<p:outputLabel value="Imagem" />
+
+								<h:graphicImage
+									value="../resources/img/#{cadastroInstrutorBean.instrutor.fabricante.foto}"
+									style="width:280px; height:145px" />
+
+							</p:panelGrid>
+
+
+						</div>
+					</div>
+
+
+
+				</div>
+
+
+
+				<div class="col-md-6">
+
+					<p:dataTable id="tabAluno" var="mapa"
+						value="#{mapaInstrutorBean.listaInstrutores}"
+						filteredValue="#{mapaInstrutorBean.pesquisaInstrutores}"
+						widgetVar="tableAluno"
+						emptyMessage="Nenhuma Registro cadastrado até o momento ...."
+						paginatorPosition="bottom" paginator="true" rows="12">
+
+						<f:facet name="header">
+							<p:outputPanel>
+
+								<p:inputText id="globalFilter"
+									onkeyup="PF('tableAluno').filter()" style="width:250px"
+									placeholder="Pesquisar" />
+							</p:outputPanel>
+						</f:facet>
+
+
+
+						<p:column style="width: 70px; text-align: left" headerText="Aluno"
+							sortBy="#{mapa.cadAgenda.aluno.nome}"
+							filterable="#{mapa.cadAgenda.aluno.nome}"
+							filterBy="#{mapa.cadAgenda.aluno.nome}">
+							<h:outputText value="#{mapa.cadAgenda.aluno.nome}" />
+						</p:column>
+
+
+						<p:column style="width: 70px; text-align: center"
+							headerText="Inicio da Aula" sortBy="#{mapa.inicio}"
+							filterable="#{mapa.inicio}" filterBy="#{mapa.inicio}">
+
+							<h:outputText value="#{mapa.inicio}">
+								<f:convertDateTime timeZone="#{initParam.timezone}"
+									pattern="dd/MM/yyyy - HH:mm" />
+
+							</h:outputText>
+						</p:column>
+
+
+						<p:column style="width: 70px; text-align: center" headerText="Fim">
+
+							<h:outputText value="#{mapa.fim}">
+								<f:convertDateTime timeZone="#{initParam.timezone}"
+									pattern="dd/MM/yyyy - HH:mm" />
+
+							</h:outputText>
+
+						</p:column>
+
+
+						<p:column style="width: 50px; text-align: center"
+							headerText="Realizadas" filterable="#{mapa.idStatus}"
+							filterBy="#{mapa.idStatus}">
+
+							<h:outputText value="#{mapa.idStatus}" />
+
+						</p:column>
+
+
+					</p:dataTable>
+
+				</div>
+
+
+			</div>
+
+
+		</h:form>
+	</ui:define>
+
+</ui:composition>

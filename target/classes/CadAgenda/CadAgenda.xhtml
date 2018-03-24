@@ -1,0 +1,219 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:o="http://omnifaces.org/ui" xmlns:p="http://primefaces.org/ui"
+	template="/templates/Layout.xhtml">
+
+	<ui:define name="content">
+
+		<h1 class="aw-page-title">
+			<i class="fa  fa-calendar"></i> Aulas Práticas
+		</h1>
+
+		<p:separator style="margin:10px 0px;" />
+
+
+		<h:form id="frm">
+
+			<p:messages id="msgs" closable="true">
+				<p:effect type="pulsate" event="load" delay="500" />
+			</p:messages>
+
+
+			<h:inputHidden id="id" value="#{cadAgendaBean.cadAgenda.id}"
+				readonly="true" />
+
+			<p:toolbar id="toolbar" style=" background-color:#fff;">
+				<p:toolbarGroup>
+					<p:commandButton value="Novo " icon="fa fa-plus" id="btn1"
+						action="#{cadAgendaBean.prepararNovoCadastro}" process="@this"
+						update="formulario-dialog" oncomplete="PF('edicaoDialog').show()"
+						styleClass="btn btn-default	 "
+						style="padding:5px;
+                               font-weight: normal !important; 
+                               color: #666 !important;">
+
+						<p:resetInput target="formulario-dialog" />
+					</p:commandButton>
+					<span class="ui-separator"> <span
+						class="ui-icon ui-icon-grip-dotted-vertical" />
+					</span>
+
+
+					<p:commandButton icon="fa fa-pencil" title="Editar" value="Editar"
+						id="btn2" process="@this" update="formulario-dialog"
+						oncomplete="PF('edicaoDialog').show()"
+						disabled="#{cadAgendaBean.cadAgendaSelecionada == null}"
+						styleClass="btn btn-default	 "
+						style="padding:5px;
+                               font-weight: normal !important; 
+                               color: #666 !important;">
+
+						<p:resetInput target="formulario-dialog" />
+
+						<f:setPropertyActionListener
+							value="#{cadAgendaBean.cadAgendaSelecionada}"
+							target="#{cadAgendaBean.cadAgendaEdicao}" />
+					</p:commandButton>
+
+					<p:spacer style="margin-left:10px" />
+
+					<p:commandButton icon="fa fa-trash" title="Excluir" value="Excluir"
+						id="btn3" process="@this"
+						update=":frm:cadAgendaTable :frm:msgs :frm:toolbar"
+						action="#{cadAgendaBean.excluir}"
+						disabled="#{cadAgendaBean.cadAgendaSelecionada == null}"
+						styleClass="btn btn-default	 "
+						style="padding:5px;
+                               font-weight: normal !important; 
+                               color: #666 !important;">
+
+						<p:confirm icon="ui-icon-alert" header="Confirmação de exclusão"
+							message="Tem Certeza que Deseja Excluir esse cadAgenda ?" />
+
+					</p:commandButton>
+
+				</p:toolbarGroup>
+
+			</p:toolbar>
+			<p:spacer style="margin:5px 0px;" />
+
+			<p:dataTable value="#{cadAgendaBean.listarCadAgendas}"
+				var="cadAgenda" widgetVar="cadAgendaTable" reflow="true"
+				emptyMessage="Nenhum Arquivo Cadastrado...." rows="13"
+				paginator="true" paginatorPosition="bottom" style="margin-top: 10px"
+				id="cadAgendaTable"
+				selection="#{cadAgendaBean.cadAgendaSelecionada}"
+				selectionMode="single" rowKey="#{cadAgenda.id}">
+
+				<f:facet name="header">
+					<p:outputPanel>
+						<p:spacer style="margin:15px 0px;" />
+
+						<p:inputText id="globalFilter" style="width:350px;"
+							onkeyup="PF('cadAgendaTable').filter()" placeholder="Pesquisar" />
+					</p:outputPanel>
+				</f:facet>
+
+				<p:ajax event="rowSelect" update=":frm:toolbar" />
+				<p:ajax event="rowUnselect" update=":frm:toolbar" />
+
+				<p:column headerText="Código" sortBy="#{cadAgenda.id}"
+					style="width:50px; text-align:center;">
+					<i class="fa fa-circle-o text-blue"></i>
+					<p:spacer style="width:10px;" />
+					<h:outputText value="#{cadAgenda.id}" />
+				</p:column>
+
+				<p:column style="width:200px; text-align:left;"
+					headerText="Instrutor" priority="4"
+					filterBy="#{cadAgenda.instrutor.nome}">
+					<i class="fa  fa-car" style="color: #3c8dbc" />
+					<p:spacer style="width:10px;" />
+					<h:outputText value="#{cadAgenda.instrutor.nome}" />
+				</p:column>
+
+
+
+				<p:column style="width:200px; text-align:left;" headerText="Aluno"
+					priority="4" filterBy="#{cadAgenda.aluno.nome}">
+					<i class="fa  fa-user" style="color: #3c8dbc" />
+					<p:spacer style="width:10px;" />
+					<h:outputText value="#{cadAgenda.aluno.nome}" />
+				</p:column>
+
+				<p:column style="width:150px; text-align:center;" headerText="Ações">
+
+					<p:button outcome="../Agendamento/Agenda.xhtml" value="Agendar"
+						icon="fa fa-calendar" title="Agendamento">
+						<f:param name="cadAgenda" value="#{cadAgenda.id}" />
+					</p:button>
+					<p:spacer style="width:5px;" />
+
+					<p:button outcome="../Agendamento/Horario.xhtml" value="Horários"
+						icon="fa fa-clock-o" title="Agendamento">
+						<f:param name="cadAgenda" value="#{cadAgenda.id}" />
+					</p:button>
+
+
+				</p:column>
+
+
+			</p:dataTable>
+
+
+			<p:dialog header="Novo Cadastro" widgetVar="edicaoDialog"
+				styleClass="modal-header" showEffect="explode" hideEffect="explode"
+				id="formulario-dialog" resizable="false" modal="true"
+				closeOnEscape="true">
+
+				<p:messages id="msgs-dialog" closable="true">
+					<p:effect type="pulsate" event="load" delay="500" />
+				</p:messages>
+				<p:defaultCommand target="salvar-button" scope="formulario-dialog" />
+
+				<h:panelGrid columns="2" id="painel-dialog">
+
+
+
+
+					<p:outputLabel value="Aluno" />
+
+					<p:selectOneMenu id="aluno" style="width:100%;" filter="true"
+						converter="omnifaces.SelectItemsConverter"
+						value="#{cadAgendaBean.cadAgendaEdicao.aluno}">
+						<f:selectItem itemLabel="Selecione o Aluno" />
+						<f:selectItems value="#{cadAgendaBean.listarAlunos}" var="var"
+							itemLabel="#{var.nome}" itemValue="#{var}" />
+					</p:selectOneMenu>
+
+
+
+					<p:outputLabel value="Instrutor" />
+					<p:selectOneMenu id="instrutor" style="width:100%;" var="inst"
+						converter="omnifaces.SelectItemsConverter"
+						value="#{cadAgendaBean.cadAgendaEdicao.instrutor}">
+						 <f:selectItem itemLabel="Selecione um Instrutor" itemValue="" />
+						<f:selectItems value="#{cadAgendaBean.listarInstrutor}" var="var"
+							itemLabel="#{var.nome}" itemValue="#{var}" />
+
+						<p:column >
+							<p:graphicImage
+								value="../resources/img/#{inst.fabricante.foto}"
+								style="width: 30px; height: 30px;" />
+						</p:column>
+
+						<p:column>
+                       #{inst.nome} 
+                            </p:column>
+
+					</p:selectOneMenu>
+
+
+					<p:outputLabel />
+					<br />
+					<p:commandButton value="Salvar" id="salvar-button"
+						styleClass="btn btn-info" icon="ui-icon-check"
+						action="#{cadAgendaBean.salvar}" process="formulario-dialog"
+						update=":frm:cadAgendaTable :frm:msgs-dialog :frm:painel-dialog"
+						oncomplete="if (!args.validationFailed) PF('edicaoDialog').hide()" />
+
+
+
+				</h:panelGrid>
+			</p:dialog>
+
+		</h:form>
+
+		<h:form>
+			<p:confirmDialog global="true">
+				<p:commandButton value="Não" type="button"
+					styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+
+				<p:commandButton value="Sim" type="button"
+					styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+			</p:confirmDialog>
+		</h:form>
+	</ui:define>
+</ui:composition>

@@ -1,0 +1,87 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui" xmlns:o="http://omnifaces.org/ui"
+	template="/templates/Layout.xhtml">
+
+
+	<ui:define name="content">
+		<f:metadata>
+			<o:viewParam name="carro" value="#{cadastroCarroBean.carro}" />
+		</f:metadata>
+
+
+		<h1 class="aw-page-title">
+			<i class="fa fa-car" /> Veículos
+		</h1>
+
+		<p:separator style="margin: 10px 0px;" />
+
+
+
+		<h:form id="frmCadastro">
+
+			<p:messages id="messages" closable="true">
+				<p:effect type="pulsate" event="load" delay="500" />
+			</p:messages>
+
+
+			<h:inputHidden id="id" value="#{cadastroCarroBean.carro.id}"
+				readonly="true" />
+
+
+			<p:commandButton styleClass="btn btn-info" ajax="false"
+				value="Cadastrar" icon="fa fa-check"
+				action="#{cadastroCarroBean.salvar}" />
+
+
+			<p:spacer style="margin-left:10px;" />
+
+
+			<p:button styleClass="btn btn-success" value="Pesquisa"
+				icon="fa fa-search" outcome="PesquisaCarro" />
+
+
+
+			<p:spacer style="margin:26px 0px;" />
+
+			<div class="panel panel-success">
+				<div class="panel-heading">
+
+					<p:panelGrid columns="2">
+
+
+						<p:outputLabel value="Veiculo" />
+
+						<p:selectOneMenu  style="width:100%;" filter="true" 
+							converter="omnifaces.SelectItemsConverter"
+							value="#{cadastroCarroBean.carro.veiculo}">
+							<f:selectItem itemLabel="Selecione o modelo" />
+							<f:selectItems value="#{cadastroCarroBean.listarVeiculos}"
+								var="var"
+								itemLabel="#{var.modelo} - #{var.veiculo} - #{var.fabricante} "
+								itemValue="#{var}" />
+						</p:selectOneMenu>
+
+						<p:outputLabel value="Foto" />
+
+						<p:fileUpload
+							fileUploadListener="#{cadastroCarroBean.handleFileUpload}"
+							auto="true" mode="advanced" dragDropSupport="false"
+							sizeLimit="5000000" fileLimit="1"
+							allowTypes="/(\.|\/)(png|jpg)$/" />
+
+
+					</p:panelGrid>
+
+				</div>
+			</div>
+
+
+		</h:form>
+
+
+	</ui:define>
+
+</ui:composition>

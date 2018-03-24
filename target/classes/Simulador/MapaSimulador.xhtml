@@ -1,0 +1,101 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:o="http://omnifaces.org/ui" xmlns:p="http://primefaces.org/ui"
+	template="/templates/Layout.xhtml">
+
+	<ui:define name="content">
+
+		<h1 class="aw-page-title">
+			<i class="fa fa-calendar" /> Horários do Aluno: <SMALL><span>
+			</span><span>#{pesquisaSimuladorBean.aluno.nome}</span></SMALL>
+		</h1>
+
+		<p:separator style="margin: 10px 0px;" />
+		<p:messages id="messages" closable="true">
+			<p:effect type="pulsate" event="load" delay="500" />
+		</p:messages>
+
+		<f:metadata>
+			<o:viewParam name="aluno" value="#{pesquisaSimuladorBean.aluno}" />
+
+		</f:metadata>
+
+		<h:form id="frm">
+	     <div class="panel panel-default">
+				<div class="panel-heading">
+
+
+					<p:button icon="fa fa-print" value="Relatório PDF" styleClass="btn btn-warning btn-sm dropdown-toggle"
+								style="padding:5px;    text-shadow: 0 1px 0 rgba(230, 69, 69, 0); 
+								-moz-box-shadow: inset 0 1px 0 rgba(230, 69, 69, 0);
+   								-webkit-box-shadow: inset 0 1px 0 rgba(230, 69, 69, 0); 
+                                 box-shadow: inset 0 1px 0 rgba(230, 69, 69, 0); " />
+
+				<div class="pull-right">
+						<div class="btn-group">
+						
+							<p:button outcome="PesquisaSimuladorAlunos.xhtml" icon="fa fa-search" value="Alunos" styleClass="btn btn-default btn-sm dropdown-toggle"
+								style="padding:5px;    text-shadow: 0 1px 0 rgba(230, 69, 69, 0); 
+								-moz-box-shadow: inset 0 1px 0 rgba(230, 69, 69, 0);
+   								-webkit-box-shadow: inset 0 1px 0 rgba(230, 69, 69, 0); 
+                                 box-shadow: inset 0 1px 0 rgba(230, 69, 69, 0); " />
+						
+						</div>
+					
+						</div>
+				</div>
+				
+			</div>
+	     
+	    
+			<p:dataTable id="simuladorTable" var="aluno"
+				value="#{mapaSimuladorBean.listarAgendas}" paginatorPosition="bottom"
+				paginator="true" emptyMessage="Nenhum Simulador encontrado." rows="12">
+
+				<p:column headerText="Código" style="width:80px; text-align:center;">
+					<h:outputText value="#{aluno.id}" />
+				</p:column>
+				
+				<p:column headerText="Início da Aula"
+							style="width:100px; text-align:center;">
+							<i class="fa fa-clock-o" />
+							<p:spacer style="width:5px" />
+							<h:outputText value="#{aluno.inicio}">
+								<f:convertDateTime timeZone="#{initParam.timezone}"
+									pattern="dd/MM/yyyy - HH:mm" />
+
+							</h:outputText>
+
+						</p:column>
+
+						<p:column headerText="Fim" style="width:100px; text-align:center;">
+							<i class="fa fa-clock-o" />
+							<p:spacer style="width:5px" />
+							<h:outputText value="#{aluno.fim}">
+								<f:convertDateTime timeZone="#{initParam.timezone}"
+									pattern="dd/MM/yyyy - HH:mm" />
+
+							</h:outputText>
+
+						</p:column>
+
+						<p:column headerText="Realizada"
+							style="width:60px; text-align:center;">
+
+							<p:inputSwitch value="#{aluno.status}" offLabel="Não"
+								onLabel="Sim" />
+
+						</p:column>
+				
+				
+				
+             
+             </p:dataTable>
+			
+
+		</h:form>
+	</ui:define>
+
+</ui:composition>

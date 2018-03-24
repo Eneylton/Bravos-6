@@ -1,0 +1,121 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui" xmlns:o="http://omnifaces.org/ui"
+	template="/templates/Layout.xhtml">
+
+
+	<ui:define name="content">
+		<f:metadata>
+			<o:viewParam name="fabricante"
+				value="#{cadastroFabricanteBean.fabricante}" />
+		</f:metadata>
+
+
+		<h1 class="aw-page-title">
+			<i class="fa fa-car" /> Veículos
+		</h1>
+
+		<p:separator style="margin: 10px 0px;" />
+
+		<h:form id="frmCadastro">
+
+			<p:messages id="messages" closable="true">
+				<p:effect type="pulsate" event="load" delay="500" />
+			</p:messages>
+
+
+			<h:inputHidden id="id"
+				value="#{cadastroFabricanteBean.fabricante.id}" readonly="true" />
+
+			<div class="panel panel-default">
+				<div class="panel-heading">
+
+
+					<p:commandButton  ajax="false"
+						value="Cadastrar" icon="fa fa-check"
+						action="#{cadastroFabricanteBean.salvar}" 
+						styleClass="btn btn-info btn-sm dropdown-toggle"
+						style="padding:5px;    text-shadow: 0 1px 0 rgba(230, 69, 69, 0); 
+								-moz-box-shadow: inset 0 1px 0 rgba(230, 69, 69, 0);
+   								-webkit-box-shadow: inset 0 1px 0 rgba(230, 69, 69, 0); 
+                                 box-shadow: inset 0 1px 0 rgba(230, 69, 69, 0); " />
+						
+
+					<div class="pull-right">
+						<div class="btn-group">
+
+							<p:button  value="Pesquisa"
+								icon="fa fa-search" outcome="PesquisaFabricante" 
+								styleClass="btn btn-success btn-sm dropdown-toggle"
+						style="padding:5px;    text-shadow: 0 1px 0 rgba(230, 69, 69, 0); 
+								-moz-box-shadow: inset 0 1px 0 rgba(230, 69, 69, 0);
+   								-webkit-box-shadow: inset 0 1px 0 rgba(230, 69, 69, 0); 
+                                 box-shadow: inset 0 1px 0 rgba(230, 69, 69, 0); " />
+								
+						</div>
+					</div>
+
+
+				</div>
+			</div>
+
+
+			<div class="panel panel-info">
+                        <div class="panel-heading">
+                           <i class="fa fa-car" /> Cadastre uma novo veículo.
+                        </div>
+                       
+                        <div class="panel-body">
+                            <div id="morris-line-chart">
+                            
+                            <p:panelGrid columns="2" styleClass="semBorda">
+						<p:outputLabel value="Tipo" />
+
+						<p:selectOneMenu id="tipo" style="width:100%;"
+							converter="omnifaces.SelectItemsConverter"
+							value="#{cadastroFabricanteBean.fabricante.tipoVei}">
+							<f:selectItem itemLabel="Selecione o Tipo" />
+							<f:selectItems
+								value="#{cadastroFabricanteBean.listarTipoVeiculos}" var="var"
+								itemLabel="#{var.descricao}" itemValue="#{var}" />
+						</p:selectOneMenu>
+
+						<p:outputLabel value="Marca" />
+
+						<p:inputText styleClass="form-control" maxlength="255"
+							value="#{cadastroFabricanteBean.fabricante.marca}"
+							required="true" />
+
+
+						<p:outputLabel value="Modelo" />
+
+						<p:inputText styleClass="form-control" maxlength="255"
+							value="#{cadastroFabricanteBean.fabricante.modelo}"
+							required="true" />
+
+
+						<p:outputLabel value="Foto" />
+
+						<p:fileUpload
+							fileUploadListener="#{cadastroFabricanteBean.handleFileUpload}"
+							auto="true" mode="advanced" dragDropSupport="false"
+							sizeLimit="5000000" fileLimit="1"
+							allowTypes="/(\.|\/)(png|jpg)$/" />
+
+
+
+
+					</p:panelGrid>
+
+				</div>
+			</div>
+</div>
+
+		</h:form>
+
+
+	</ui:define>
+
+</ui:composition>

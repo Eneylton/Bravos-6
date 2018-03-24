@@ -1,0 +1,92 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui" xmlns:o="http://omnifaces.org/ui"
+	template="/templates/Layout.xhtml">
+
+
+	<ui:define name="content">
+		<f:metadata>
+			<o:viewParam name="categoria"
+				value="#{cadastroCategoriaBean.categoria}" />
+		</f:metadata>
+
+
+		<h1 class="aw-page-title">
+			<i class="fa fa-minus-circle" style="color:#ff0000" /> Despesas
+		</h1>
+
+		<p:separator style="margin:10px 0px;" />
+
+
+		<h:form id="frmCadastro">
+
+			<p:messages id="messages" closable="true">
+				<p:effect type="pulsate" event="load" delay="500" />
+			</p:messages>
+
+
+			<h:inputHidden id="id" value="#{cadastroCategoriaBean.categoria.id}"
+				readonly="true" />
+
+			<div class="panel panel-default">
+				<div class="panel-heading">
+					<p:commandButton ajax="false" value="Cadastrar" icon="fa fa-check"
+						action="#{cadastroCategoriaBean.salvar}"
+						styleClass="btn btn-info btn-sm dropdown-toggle"
+						style="padding:5px;    text-shadow: 0 1px 0 rgba(230, 69, 69, 0); 
+								-moz-box-shadow: inset 0 1px 0 rgba(230, 69, 69, 0);
+   								-webkit-box-shadow: inset 0 1px 0 rgba(230, 69, 69, 0); 
+                                 box-shadow: inset 0 1px 0 rgba(230, 69, 69, 0); " />
+
+
+					<div class="pull-right">
+						<div class="btn-group">
+
+							<p:button value="Pesquisa" icon="fa fa-search"
+								outcome="PesquisaCategoria"
+								styleClass="btn btn-success btn-sm dropdown-toggle"
+								style="padding:5px;    text-shadow: 0 1px 0 rgba(230, 69, 69, 0); 
+								-moz-box-shadow: inset 0 1px 0 rgba(230, 69, 69, 0);
+   								-webkit-box-shadow: inset 0 1px 0 rgba(230, 69, 69, 0); 
+                                 box-shadow: inset 0 1px 0 rgba(230, 69, 69, 0); " />
+
+
+						</div>
+					</div>
+
+				</div>
+			</div>
+
+
+
+			<div class="panel panel-info">
+                        <div class="panel-heading">
+                           <i class="fa fa-graduation-cap" /> Cadastre uma nova despesa.
+                        </div>
+                       
+                        <div class="panel-body">
+                            <div id="morris-line-chart">
+                            
+                            <p:panelGrid columns="2" styleClass="semBorda">
+
+						<p:outputLabel value="Categoria" />
+
+						<p:inputText styleClass="form-control" maxlength="255" style="width:300px"
+							value="#{cadastroCategoriaBean.categoria.descricao}"
+							required="true" />
+
+
+					</p:panelGrid>
+
+				</div>
+			</div>
+</div>
+
+		</h:form>
+
+
+	</ui:define>
+
+</ui:composition>

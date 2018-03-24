@@ -1,0 +1,84 @@
+/* TOGGLE */
+.aw-toggle {
+	float: left;
+	line-height: 50px;
+	margin-left: 67px;
+	color: #fff;
+}
+
+/* MENU */
+.aw-menu {
+	font-size: 1.1em;
+}
+
+.aw-menu>ul {
+	margin: 0;
+	padding: 0;
+	list-style: none;
+}
+
+.aw-menu>ul a {
+	display: block;
+	padding: 0px 26px;
+	margin-top: 27px;
+	text-decoration: none;
+	font-weight: 500;
+	color: #262b2d !important;
+}
+
+.aw-menu>ul i {
+	margin-right: 6px;
+}
+
+.aw-menu>ul a:hover, .aw-menu>ul a:focus {
+	background-color: #d6d6d6;
+}
+
+.aw-menu>ul .is-selected {
+	border-left: 3px solid #1592d0 !important;
+	background-color: #f3f3f3 !important;
+}
+
+.aw-menu>ul .is-selected a {
+	margin-left: -3px;
+	color: #666;
+}
+
+/* PAGE-TITLE */
+.aw-page-title {
+	margin-top: 52px !important;
+	padding: 11px 0 !important;
+	font-size: 1.5em !important;
+	color: #373737 !important;
+}
+
+.ui-helper-reset {
+	line-height: -1.7 !important;
+	font-size: 86% !important;
+}
+
+.ui-widget {
+	font-size: -0.9em !important;
+}
+
+.ui-datatable .ui-column-filter {
+	width: 418px !important;
+}
+
+/* .ui-widget {
+    font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+    font-size: 1.1em;
+    margin-right: 30px;
+} */
+.ui-state-highlight .ui-icon {
+	
+}
+
+.ui-galleria-caption {
+	background: #e91e63;
+}
+
+.ui-widget-content {
+	border: 1px solid #ffffff;
+}
+

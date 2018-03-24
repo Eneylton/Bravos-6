@@ -1,0 +1,113 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:o="http://omnifaces.org/ui" xmlns:p="http://primefaces.org/ui"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	template="../templates/Layout.xhtml">
+
+	<ui:define name="content">
+
+		<f:metadata>
+
+			<o:viewParam name="aluno" value="#{localizacaoBean.aluno}" />
+
+		</f:metadata>
+
+		<h1 class="aw-page-title">
+			<i class="fa  fa-map-marker"></i> Localização dos Alunos
+		</h1>
+
+		<p:separator style="margin:10px 0px;" />
+
+		<p:messages id="messages" closable="true">
+			<p:effect type="pulsate" event="load" delay="500" />
+		</p:messages>
+
+		<h:form id="frm">
+
+			<h:inputHidden id="lat" value="#{localizacaoBean.l1} "
+				style="color:#ff0000" />
+
+			<h:inputHidden id="lot" value="#{localizacaoBean.l2}"
+				style="color:#3b88ca" />
+
+			<h:inputHidden id="foto" value="#{localizacaoBean.foto}"
+				style="color:#3b88ca" />
+
+			<div class="panel panel-default">
+				<div class="panel-heading">
+
+					<p:button type="button" value="Novo" outcome="Aluno"
+						disabled="#{segurancaBean.permitido}" icon="fa fa-check"
+						styleClass="btn btn-info btn-sm dropdown-toggle"
+						style="padding:5px;    text-shadow: 0 1px 0 rgba(230, 69, 69, 0); 
+								-moz-box-shadow: inset 0 1px 0 rgba(230, 69, 69, 0);
+   								-webkit-box-shadow: inset 0 1px 0 rgba(230, 69, 69, 0); 
+                                 box-shadow: inset 0 1px 0 rgba(230, 69, 69, 0); ">
+
+					</p:button>
+
+
+					<div class="pull-right">
+						<div class="btn-group">
+
+
+							<p:button type="button" value="Pesquisar"
+								outcome="PesquisaAluno.xhtml"
+								disabled="#{segurancaBean.permitido}" icon="fa fa-search"
+								styleClass="btn btn-warning btn-sm dropdown-toggle"
+								style="padding:5px;    text-shadow: 0 1px 0 rgba(230, 69, 69, 0); 
+								-moz-box-shadow: inset 0 1px 0 rgba(230, 69, 69, 0);
+   								-webkit-box-shadow: inset 0 1px 0 rgba(230, 69, 69, 0); 
+                                 box-shadow: inset 0 1px 0 rgba(230, 69, 69, 0); ">
+
+							</p:button>
+
+
+						</div>
+					</div>
+				</div>
+			</div>
+
+
+
+			<p:gmap onPointClick="handlePointClick(event);"
+				center="-2.5364511, -44.209602" zoom="15" type="ROADMAP"
+				model="#{localizacaoBean.draggableModel}"
+				style="width:100%;height:350px">
+
+
+				<p:ajax event="markerDrag"
+					listener="#{localizacaoBean.onMarkerDrag}"
+					update="lat lot messages " />
+
+
+				<p:ajax event="overlaySelect"
+					listener="#{localizacaoBean.onMarkerSelect}" />
+
+				<p:gmapInfoWindow id="infoWindow">
+					<p:outputPanel
+						style="text-align: left;
+						       display: inline-table;
+						       width: 460px;
+						       margin: 0px;">
+
+
+						<p:graphicImage
+							value="../resources/img/#{localizacaoBean.marker.data}"
+							style="padding: 7px; width: 50px; height: 60px;" />
+
+
+						<h:outputText value="#{localizacaoBean.marker.shadow}" />
+					</p:outputPanel>
+
+				</p:gmapInfoWindow>
+
+			</p:gmap>
+
+
+		</h:form>
+	</ui:define>
+
+</ui:composition>

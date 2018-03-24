@@ -1,0 +1,295 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui" xmlns:o="http://omnifaces.org/ui"
+	template="/templates/Layout.xhtml">
+
+
+	<ui:define name="content">
+		<f:metadata>
+			<o:viewParam name="aluno" value="#{cadastroAlunoBean.aluno}" />
+		</f:metadata>
+
+		<h1 class="aw-page-title">
+			<i class="fa fa-credit-card"></i> Aluno - Financeiro
+		</h1>
+
+		<p:separator style="margin:10px 0px;" />
+
+
+		<h:form id="frm" prependId="false">
+
+			<p:messages id="messages" closable="true">
+				<p:effect type="pulsate" event="load" delay="500" />
+			</p:messages>
+
+			<h:inputHidden id="id" value="#{cadastroAlunoBean.aluno.id}"
+				readonly="true" />
+				
+				
+				
+
+
+			<div class="panel panel-default">
+				<div class="panel-heading">
+				
+				
+				<p:commandButton value="Á vista" icon="fa fa-plus"
+				 onclick="PF('dlg2').show();" styleClass="btn btn-info btn-sm dropdown-toggle"
+						style="padding:5px;    text-shadow: 0 1px 0 rgba(230, 69, 69, 0); 
+							-moz-box-shadow: inset 0 1px 0 rgba(230, 69, 69, 0);
+								-webkit-box-shadow: inset 0 1px 0 rgba(230, 69, 69, 0); 
+                             box-shadow: inset 0 1px 0 rgba(230, 69, 69, 0); " >
+
+				<p:resetInput target="formulario-dialog" />
+
+			</p:commandButton>
+			
+			<p:spacer style="margin-left:10px;" />
+			
+			
+			<p:commandButton value="Entrada + Parcela" icon="fa fa-credit-card"
+			onclick="PF('dlg1').show();" styleClass="btn btn-default btn-sm dropdown-toggle"
+					style="padding:5px;    text-shadow: 0 1px 0 rgba(230, 69, 69, 0); 
+						-moz-box-shadow: inset 0 1px 0 rgba(230, 69, 69, 0);
+							-webkit-box-shadow: inset 0 1px 0 rgba(230, 69, 69, 0); 
+                         box-shadow: inset 0 1px 0 rgba(230, 69, 69, 0); " />
+
+
+				
+
+					<div class="pull-right">
+						<div class="btn-group">
+						
+						<p:button type="button" value="Fluxo de Caixa" outcome="../Financeiro/FluxoCaixa.xhtml"
+								icon="fa fa-safari"
+								styleClass="btn btn-danger btn-sm dropdown-toggle"
+								style="padding:5px;    text-shadow: 0 1px 0 rgba(230, 69, 69, 0); 
+								-moz-box-shadow: inset 0 1px 0 rgba(230, 69, 69, 0);
+   								-webkit-box-shadow: inset 0 1px 0 rgba(230, 69, 69, 0); 
+                                 box-shadow: inset 0 1px 0 rgba(230, 69, 69, 0); " />
+						
+							<p:spacer style="margin-left:20px;" />
+												
+
+						</div>
+						
+						<div class="btn-group">
+						
+							<p:button type="button" value="Pesquisar" outcome="PesquisaAluno.xhtml"
+								icon="fa fa-search"
+								styleClass="btn btn-warning btn-sm dropdown-toggle"
+								style="padding:5px;    text-shadow: 0 1px 0 rgba(230, 69, 69, 0); 
+								-moz-box-shadow: inset 0 1px 0 rgba(230, 69, 69, 0);
+   								-webkit-box-shadow: inset 0 1px 0 rgba(230, 69, 69, 0); 
+                                 box-shadow: inset 0 1px 0 rgba(230, 69, 69, 0); " />
+						
+						
+						</div>
+					</div>
+
+
+
+				</div>
+			</div>
+
+			<hr />
+			
+			<div class="col-sm-5" style="margin-left: -15px;">
+
+
+			 <div class="panel panel-primary">
+                        <div class="panel-heading">
+                            <div class="row">
+                                <div class="col-xs-3">
+                                    <i class="fa fa-group fa-5x"></i>
+                                </div>
+                                <div class="col-xs-9 text-right">
+                                    <div class="huge">
+                                    
+                                    <p:outputLabel value="#{cadastroAlunoBean.aluno.servico.valor}">
+
+							<f:convertNumber type="currency" />
+
+						</p:outputLabel>
+                                    
+                                    </div>
+                                    <div><h5>#{cadastroAlunoBean.aluno.servico.descricao} </h5></div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                            <div class="panel-footer">
+                                <span class="pull-left" style="font-size:16px">Aluno: #{cadastroAlunoBean.aluno.nome}</span>
+                                <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+                                <div class="clearfix"></div>
+                            </div>
+                        
+                    </div>
+                    
+</div>
+
+	<div class="col-sm-7">
+	
+	<p:dataTable var="parcela" id="tab" rows="6"
+					paginatorPosition="bottom"
+					value="#{cadastroAlunoBean.listaFinanceiroAlunos}"
+					emptyMessage="Nenhuma Parcela Gerada até o momento ...."
+					paginator="true" rowsPerPageTemplate="10,15,30">
+
+
+
+					<p:column headerText="Parcelas">
+						<span class="label label-primary"> <i
+							class="fa fa-arrow-right" style="color: #cff501" /> <p:spacer
+								style="margin-left:10px;" /> <h:outputText style="color:#fff"
+								value="#{parcela.qtdParcela}" />
+						</span>
+					</p:column>
+
+					<p:column headerText="Vencimento">
+						<div class="external-event bg-green">
+							<i class="fa fa-calendar" />
+							<p:spacer style="margin-left:10px;" />
+							<h:outputText value="#{parcela.data}">
+								<f:convertDateTime pattern="dd/MM/yyyy" />
+							</h:outputText>
+						</div>
+					</p:column>
+
+					<p:column headerText="Status">
+						<span class="label label-info"><h:outputText value="PAGO"
+								style="color:#fff" rendered="#{parcela.status eq 'PAGO'}" /></span>
+
+						<span class="label label-danger"><h:outputText
+								style="color:#fff" value="EM ABERTO "
+								rendered="#{parcela.status eq 'EM ABERTO'}" /></span>
+					</p:column>
+
+					<p:column headerText="Valor">
+						<span class="label label-primary"> <i class="fa fa-dollar"
+							style="color: #cff501" /> <p:spacer style="margin-left:10px;" />
+							<h:outputText value="#{parcela.valor}" style="color:#fff">
+								<f:convertNumber type="currency" />
+							</h:outputText>
+						</span>
+					</p:column>
+
+
+				</p:dataTable>
+
+				<p:dialog id="formulario-dialog" header="Entrada + Parcela"
+					modal="true" widgetVar="dlg1" minHeight="40" showEffect="explode"
+					hideEffect="explode">
+					<p:panelGrid columns="2" styleClass="semBorda">
+
+						<p:outputLabel value="Parcelas" />
+
+						<p:selectOneMenu id="qtd" value="#{cadastroAlunoBean.aluno.qtd}">
+							<f:selectItem itemLabel="Selecione" itemValue="" />
+							<f:selectItem itemLabel="2 - Parcelas" itemValue="2" />
+							<f:selectItem itemLabel="4 - Parcelas" itemValue="4" />
+							<f:selectItem itemLabel="5 - Parcelas" itemValue="5" />
+							<f:selectItem itemLabel="10 - Parcelas" itemValue="10" />
+						</p:selectOneMenu>
+
+						<p:outputLabel value="Valor de Entrada" />
+						<p:inputText id="entrada" onkeydown="mascara(this,moeda)"
+							value="#{cadastroAlunoBean.aluno.entrada}" required="true">
+
+							<f:convertNumber groupingUsed="true" minFractionDigits="2"
+								maxFractionDigits="2" />
+
+						</p:inputText>
+
+						<p:outputLabel value="Forma de Pagamento (Entrada)" />
+
+						<p:selectOneMenu id="forma"
+							value="#{cadastroAlunoBean.aluno.idFormaPagamento}">
+							<f:selectItem itemLabel="Selecione" itemValue="" />
+							<f:selectItem itemLabel="001 - Dinheiro" itemValue="1" />
+							<f:selectItem itemLabel="002 - Débito Automático" itemValue="2" />
+							<f:selectItem itemLabel="003 - Cartão de Crédito" itemValue="3" />
+							<f:selectItem itemLabel="004 - Cheque" itemValue="4" />
+						</p:selectOneMenu>
+
+						<p:outputLabel value="Caixa" />
+
+						<p:selectOneMenu id="caixa"
+							value="#{cadastroAlunoBean.aluno.idCaixa}">
+							<f:selectItem itemLabel="Selecione" itemValue="" />
+							<f:selectItem itemLabel="001 - Empresa" itemValue="1" />
+							<f:selectItem itemLabel="002 - Agência Bancária" itemValue="2" />
+
+						</p:selectOneMenu>
+
+						<p:outputLabel value="Data do Vencimento" />
+						<p:calendar value="#{cadastroAlunoBean.aluno.data}" locale="pt"
+							pattern="dd/MM/yyyy" />
+
+						<p:outputLabel />
+						
+						<p:outputLabel /> <p:outputLabel />
+
+						<p:commandButton value="Gerar Parcelas" ajax="false"
+							icon="fa fa-refresh" action="#{cadastroAlunoBean.calcular}"
+							update=":frm:tab" styleClass="btn btn-info btn-sm dropdown-toggle"
+						style="padding:5px;    text-shadow: 0 1px 0 rgba(230, 69, 69, 0); 
+							-moz-box-shadow: inset 0 1px 0 rgba(230, 69, 69, 0);
+								-webkit-box-shadow: inset 0 1px 0 rgba(230, 69, 69, 0); 
+                             box-shadow: inset 0 1px 0 rgba(230, 69, 69, 0); " />
+
+
+					</p:panelGrid>
+				</p:dialog>
+
+				<p:dialog id="formulario-dialog2" header="Á vista" modal="true"
+					widgetVar="dlg2" minHeight="40" showEffect="explode"
+					hideEffect="explode">
+					<p:panelGrid columns="2" styleClass="semBorda">
+
+						<p:outputLabel value="Forma de Pagamento (Entrada)" />
+
+						<p:selectOneMenu id="forma2"
+							value="#{cadastroAlunoBean.aluno.idFormaPagamento2}">
+							<f:selectItem itemLabel="Selecione" itemValue="" />
+							<f:selectItem itemLabel="001 - Dinheiro" itemValue="1" />
+							<f:selectItem itemLabel="002 - Débito Automático" itemValue="2" />
+							<f:selectItem itemLabel="003 - Cartão de Crédito" itemValue="3" />
+							<f:selectItem itemLabel="004 - Cheque" itemValue="4" />
+						</p:selectOneMenu>
+
+
+
+						<p:outputLabel value="Caixa" />
+
+						<p:selectOneMenu id="caixa2"
+							value="#{cadastroAlunoBean.aluno.idCaixa2}">
+							<f:selectItem itemLabel="Selecione" itemValue="" />
+							<f:selectItem itemLabel="001 - Empresa" itemValue="1" />
+							<f:selectItem itemLabel="002 - Agência Bancária" itemValue="2" />
+
+						</p:selectOneMenu>
+						
+						<p:outputLabel /> <p:outputLabel />
+
+						<p:commandButton value="Registrar" ajax="false" icon="fa fa-check"
+							action="#{cadastroAlunoBean.pagamentoAvista}" update=":frm:tab" styleClass="btn btn-info btn-sm dropdown-toggle"
+						style="padding:5px;    text-shadow: 0 1px 0 rgba(230, 69, 69, 0); 
+							-moz-box-shadow: inset 0 1px 0 rgba(230, 69, 69, 0);
+								-webkit-box-shadow: inset 0 1px 0 rgba(230, 69, 69, 0); 
+                             box-shadow: inset 0 1px 0 rgba(230, 69, 69, 0); "  />
+					</p:panelGrid>
+
+				</p:dialog>
+			</div>
+	
+	
+
+		</h:form>
+
+
+	</ui:define>
+
+</ui:composition>

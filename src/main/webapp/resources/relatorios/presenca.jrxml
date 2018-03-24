@@ -1,0 +1,184 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="presenca" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="1a22e657-9fe6-45f3-a844-8bb3198d734f">
+	<property name="ireport.zoom" value="1.5"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="idTurma" class="java.lang.String"/>
+	<field name="nome" class="java.lang.String"/>
+	<field name="id" class="java.lang.String"/>
+	<field name="turma.descricao" class="java.lang.String"/>
+	<field name="turma.inicio" class="java.util.Date"/>
+	<field name="turma.fim" class="java.util.Date"/>
+	<field name="turma.turno" class="java.lang.String"/>
+	<field name="turma.professor.nome" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="79" splitType="Stretch">
+			<staticText>
+				<reportElement x="168" y="21" width="244" height="20" uuid="c75e37db-2454-4d04-a48e-2b5c91e7f0a6"/>
+				<textElement textAlignment="Center">
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Lista de Presença]]></text>
+			</staticText>
+			<line>
+				<reportElement x="2" y="63" width="553" height="1" uuid="11a5ec71-189c-4dee-b132-7ea02409451d"/>
+			</line>
+			<textField pattern="EEEEE dd MMMMM yyyy">
+				<reportElement x="438" y="43" width="117" height="20" uuid="6b46f1d1-9ca3-42dd-a979-eb928facc0dd"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="1" y="0" width="168" height="32" uuid="6ca64dfc-7ad1-43eb-afa2-b072de7470a3"/>
+				<textElement>
+					<font size="20" isBold="true"/>
+				</textElement>
+				<text><![CDATA[BRAVOS 6.0]]></text>
+			</staticText>
+			<line>
+				<reportElement x="177" y="41" width="235" height="1" uuid="f824b093-d44c-4e0e-b093-7b74f01d0d55"/>
+			</line>
+			<staticText>
+				<reportElement x="3" y="25" width="111" height="11" uuid="bca8dd3e-dedb-462d-99d2-c530d8e77d28"/>
+				<textElement>
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Gerenciador Auto Escola]]></text>
+			</staticText>
+		</band>
+	</title>
+	<pageHeader>
+		<band splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="145" splitType="Stretch">
+			<rectangle>
+				<reportElement x="101" y="70" width="303" height="20" uuid="57a2da4c-66eb-4db5-84ec-fc88d6a2c623"/>
+			</rectangle>
+			<rectangle>
+				<reportElement x="101" y="50" width="303" height="20" uuid="6d9c0a86-f912-43a1-b221-9f88b6f3213f"/>
+			</rectangle>
+			<rectangle>
+				<reportElement x="101" y="30" width="303" height="20" uuid="f239eec2-d2ab-4250-b29d-fb6dd7579f20"/>
+			</rectangle>
+			<rectangle>
+				<reportElement x="101" y="10" width="303" height="20" uuid="8db16b20-650f-4c8a-a05e-1db844a8dd68"/>
+			</rectangle>
+			<rectangle>
+				<reportElement x="1" y="115" width="554" height="26" forecolor="#D4D4D4" backcolor="#E2E2E2" uuid="4ce2e8a9-74ec-4d03-89cc-8427cd836282"/>
+			</rectangle>
+			<staticText>
+				<reportElement x="178" y="115" width="179" height="26" uuid="52615e5b-8b9e-42ea-8703-607d5ba88a77"/>
+				<textElement verticalAlignment="Middle">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Alunos]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="2" y="114" width="86" height="27" uuid="364cd475-2991-47f4-854b-a5de4805c75e"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Presença]]></text>
+			</staticText>
+			<line>
+				<reportElement x="1" y="142" width="554" height="1" uuid="5d0cd3b0-cc61-476d-8edc-f78bb9ffd214"/>
+			</line>
+			<textField>
+				<reportElement x="113" y="10" width="243" height="20" uuid="1b5b418b-7e34-47a8-a8bd-03a339660bf9"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{turma.descricao}]]></textFieldExpression>
+			</textField>
+			<textField pattern="dd/MM/yyyy">
+				<reportElement x="140" y="70" width="82" height="20" uuid="0faaaed8-0a62-4b55-a103-599a7df4eec9"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{turma.inicio}]]></textFieldExpression>
+			</textField>
+			<textField pattern="dd/MM/yyyy">
+				<reportElement x="272" y="70" width="81" height="20" uuid="27c9894b-c84d-463e-8689-b193d45555e9"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{turma.fim}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="113" y="50" width="100" height="20" uuid="418d9bf9-bd46-4bb0-9771-7ab29a62f835"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{turma.turno}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="113" y="70" width="20" height="20" uuid="66d9334e-44a9-4f63-a7a4-1f0fea9c4b55"/>
+				<textElement verticalAlignment="Middle"/>
+				<text><![CDATA[De:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="237" y="70" width="20" height="20" uuid="58e3a465-2093-4a3d-96c6-6ddb2e2269a0"/>
+				<textElement verticalAlignment="Middle"/>
+				<text><![CDATA[até]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="113" y="30" width="243" height="20" uuid="5ea0bba7-2f32-4752-bf66-5afd2e732cc3"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{turma.professor.nome}]]></textFieldExpression>
+			</textField>
+			<image>
+				<reportElement x="452" y="10" width="131" height="104" uuid="ecedb288-0df8-4cc2-adb6-576d7c60984b"/>
+				<imageExpression><![CDATA["C:\\Meus_Projetos_2016\\bravos-6.0\\src\\main\\webapp\\resources\\img\\lista.png"]]></imageExpression>
+			</image>
+			<rectangle>
+				<reportElement x="1" y="10" width="100" height="20" uuid="2cd91b51-ac2e-4a76-9a92-951356e79ad5"/>
+			</rectangle>
+			<rectangle>
+				<reportElement x="1" y="30" width="100" height="20" uuid="f53b9d69-9880-42b6-b57c-5d6a149fc392"/>
+			</rectangle>
+			<rectangle>
+				<reportElement x="1" y="50" width="100" height="20" uuid="521075c5-0dd3-4b76-bf77-467122af3f38"/>
+			</rectangle>
+			<rectangle>
+				<reportElement x="1" y="70" width="100" height="20" uuid="90e2f349-390f-42c9-8d2b-4878de32c117"/>
+			</rectangle>
+			<staticText>
+				<reportElement x="8" y="10" width="49" height="20" uuid="1c0c0ba1-5b0f-41dd-ad3e-900e4e2bf4ce"/>
+				<textElement verticalAlignment="Middle"/>
+				<text><![CDATA[Turma:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="8" y="30" width="49" height="20" uuid="5bce69b3-ecfa-4692-9072-9565aa3b7938"/>
+				<textElement verticalAlignment="Middle"/>
+				<text><![CDATA[Professor:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="8" y="50" width="49" height="20" uuid="2a058016-1a16-403d-afe8-b47a4f5389be"/>
+				<textElement verticalAlignment="Middle"/>
+				<text><![CDATA[Turno:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="8" y="70" width="49" height="20" uuid="1e377b61-3b51-44a5-a1af-2dae1d9abc87"/>
+				<textElement verticalAlignment="Middle"/>
+				<text><![CDATA[Período:]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="23" splitType="Stretch">
+			<textField>
+				<reportElement x="177" y="2" width="179" height="20" uuid="c433f104-9f57-4410-b81f-e520a3b0c445"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{nome}]]></textFieldExpression>
+			</textField>
+			<rectangle>
+				<reportElement x="32" y="7" width="12" height="10" uuid="37c59114-fa43-4f2e-a15c-dc50fcfb71ce"/>
+			</rectangle>
+		</band>
+	</detail>
+	<columnFooter>
+		<band splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band splitType="Stretch"/>
+	</summary>
+</jasperReport>

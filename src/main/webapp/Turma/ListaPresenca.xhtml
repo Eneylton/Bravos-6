@@ -1,0 +1,161 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui" xmlns:o="http://omnifaces.org/ui"
+	template="/templates/Layout.xhtml">
+
+
+	<ui:define name="content">
+		<f:metadata>
+			<o:viewParam name="turma" value="#{cadastroBuscarAlunoBean.turma}" />
+		</f:metadata>
+
+		<h1 class="aw-page-title">
+			<i class="fa fa-th-list" /> Lista de Alunos por Turma
+		</h1>
+
+		<p:separator style="margin:9px 0px;" />
+
+
+		<h:form id="frm" prependId="false">
+
+			<p:messages id="messages" closable="true">
+				<p:effect type="pulsate" event="load" delay="500" />
+			</p:messages>
+
+
+
+			<h:inputHidden id="id" value="#{cadastroBuscarAlunoBean.turma.id}"
+				readonly="true" />
+
+				<div class="panel panel-default">
+				<div class="panel-heading">
+					<p:commandButton
+						action="#{cadastroBuscarAlunoBean.gerarListaPresenca}"
+						value="Imprimir" icon="fa fa-print"
+						update="frm" 
+						styleClass="btn btn-info btn-sm dropdown-toggle"
+								style="padding:5px;    text-shadow: 0 1px 0 rgba(230, 69, 69, 0); 
+								-moz-box-shadow: inset 0 1px 0 rgba(230, 69, 69, 0);
+   								-webkit-box-shadow: inset 0 1px 0 rgba(230, 69, 69, 0); 
+                                 box-shadow: inset 0 1px 0 rgba(230, 69, 69, 0); " />
+
+					
+					<div class="pull-right">
+						<div class="btn-group">
+			
+				
+					<p:button value="Pesquisa" icon="fa fa-search" outcome="Turma" styleClass="btn btn-default btn-sm dropdown-toggle"
+								style="padding:5px;    text-shadow: 0 1px 0 rgba(230, 69, 69, 0); 
+								-moz-box-shadow: inset 0 1px 0 rgba(230, 69, 69, 0);
+   								-webkit-box-shadow: inset 0 1px 0 rgba(230, 69, 69, 0); 
+                                 box-shadow: inset 0 1px 0 rgba(230, 69, 69, 0); " />
+					
+					
+					</div>
+					</div>
+			
+
+
+			</div>
+			</div>
+			<p:spacer style="margin:5px 0px;" />
+
+			<p:panel id="basic" footer="Lista de Presença" style="margin-bottom:20px" >
+
+				<div class="row">
+					
+					<div class="col-md-4">
+
+						<div class="control-group form-group">
+
+							<div Class="controls">
+								<p:panelGrid columns="2" styleClass="semBorda">
+									<f:facet name="header">
+							Dados do Cadastro
+							</f:facet>
+									<p:outputLabel value="Turma" />
+									<p:outputLabel
+										value="#{cadastroBuscarAlunoBean.turma.descricao}" />
+
+									<p:outputLabel value="Professor" />
+									<p:outputLabel
+										value="#{cadastroBuscarAlunoBean.turma.professor.nome}" />
+
+									<p:outputLabel value="Início das Aulas:" />
+									<p:outputLabel value="#{cadastroBuscarAlunoBean.turma.inicio}">
+										<f:convertDateTime pattern="dd/MM/yyyy" />
+
+									</p:outputLabel>
+
+									<p:outputLabel value="Conclusão" />
+									<p:outputLabel value="#{cadastroBuscarAlunoBean.turma.fim}">
+										<f:convertDateTime pattern="dd/MM/yyyy" />
+
+									</p:outputLabel>
+
+
+
+									<p:outputLabel value="Turno:" />
+
+									<p:outputLabel value="#{cadastroBuscarAlunoBean.turma.turno}" />
+
+								</p:panelGrid>
+
+
+
+
+
+							</div>
+						</div>
+					</div>
+
+
+
+					<div class="col-md-8">
+
+						<div class="control-group form-group">
+
+							<div Class="controls">
+
+								<p:dataTable id="dt" var="aluno" paginatorPosition="bottom"
+									paginator="true" rows="10"
+									value="#{cadastroBuscarAlunoBean.alunos}"
+									selection="#{cadastroBuscarAlunoBean.alunosSelecionados}"
+									rowKey="#{aluno.id}">
+
+
+									<p:column headerText="Código"
+										style="width:100px;text-align:center;">
+										<i class="fa fa-circle-o text-blue" />
+										<p:spacer style="width:10px;" /> 
+                                     #{aluno.id}  
+                                    </p:column>
+
+
+									<p:column headerText="Alunos">
+
+										<i class="fa fa-user" />
+										<p:spacer style="width:10px;" />
+                                     #{aluno.nome}  
+                                    </p:column>
+
+
+
+								</p:dataTable>
+
+							</div>
+						</div>
+					</div>
+				</div>
+
+
+			</p:panel>
+
+		</h:form>
+
+	</ui:define>
+
+
+</ui:composition>

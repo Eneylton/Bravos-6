@@ -1,0 +1,17 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui" xmlns:o="http://omnifaces.org/ui">
+
+
+<p:poll interval="10" update="graf22" >
+
+
+<p:chart id="graf22" type="line" model="#{graficoLinhaBean.graficoLinha}" responsive="true"
+										style="width:100%;height:400px" />
+</p:poll>
+
+</ui:composition>
+
+

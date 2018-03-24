@@ -1,0 +1,60 @@
+<ui:composition template="/templates/Layout.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui" xmlns:o="http://omnifaces.org/ui">
+
+	<ui:define name="content">
+
+		<f:metadata>
+			<o:viewParam name="usuario" value="#{loginBean.usuario}" />
+		</f:metadata>
+
+		<div
+			style="margin: 143px 234px 246px 293px; width: 400px; background-color: #EFEFEF; padding: 19px;">
+
+			<div class="content" style="margin-left: 54px;">
+				<p:messages id="messages" autoUpdate="true" closable="true" />
+				<div class="form">
+					<h4>Autenticação de Usuários</h4>
+				</div>
+				<hr />
+				<br />
+
+				<h:form class="form-horizontal">
+					<div class="form-group">
+						<label for="inputEmail3" class="col-sm-2 control-label">Login:
+						</label>
+						<div class="col-sm-10">
+							<p:inputText id="login" maxlength="20"
+								value="#{loginBean.usuario.login}" required="true"
+								requiredMessage="Usuário deve ser informado." />
+						</div>
+					</div>
+					<div class="form-group">
+						<label for="inputPassword3" class="col-sm-2 control-label">Senha:
+						</label>
+						<div class="col-sm-10">
+							<p:password id="senha" value="#{loginBean.usuario.senha}"
+								required="true" requiredMessage="Senha deve ser informada." />
+						</div>
+					</div>
+
+					<div class="form-group">
+						<div class="col-sm-offset-2 col-sm-10">
+							<p:commandButton icon="fa fa-user" value="Entrar"
+								styleClass="btn btn-info" ajax="false" id="botaoLogin"
+								action="#{loginBean.authenticate}">
+							</p:commandButton>
+						</div>
+					</div>
+				</h:form>
+
+			</div>
+
+		</div>
+
+	</ui:define>
+
+</ui:composition>

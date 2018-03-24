@@ -1,0 +1,259 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="mapaAluno" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="3cb7dbe0-7fa5-430a-9a31-9e9f2a1b1c10">
+	<property name="ireport.zoom" value="1.5"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="idAgenda" class="java.lang.String"/>
+	<field name="id" class="java.lang.String"/>
+	<field name="inicio" class="java.util.Date"/>
+	<field name="fim" class="java.util.Date"/>
+	<field name="status" class="java.lang.String"/>
+	<field name="cadAgenda.instrutor.fabricante.marca" class="java.lang.String"/>
+	<field name="cadAgenda.aluno.nome" class="java.lang.String"/>
+	<field name="cadAgenda.instrutor.nome" class="java.lang.String"/>
+	<field name="cadAgenda.instrutor.fabricante.modelo" class="java.lang.String"/>
+	<field name="idStatus" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="76" splitType="Stretch">
+			<staticText>
+				<reportElement x="2" y="2" width="168" height="32" uuid="b8ad191d-621f-4f6b-8091-e0a3898748b3"/>
+				<textElement>
+					<font size="20" isBold="true"/>
+				</textElement>
+				<text><![CDATA[BRAVOS 6.0]]></text>
+			</staticText>
+			<line>
+				<reportElement x="1" y="62" width="555" height="1" uuid="02e8d953-c888-443d-8575-712094cd0855"/>
+			</line>
+			<staticText>
+				<reportElement x="3" y="28" width="111" height="11" uuid="cbd7de0d-bf15-44f0-b82a-33b50fb5b05d"/>
+				<textElement>
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Gerenciador Auto Escola]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="182" y="15" width="181" height="20" uuid="af57883e-ae74-4517-9810-514ae432860b"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Agendamento]]></text>
+			</staticText>
+			<line>
+				<reportElement x="163" y="38" width="228" height="1" uuid="788982bd-0773-44cf-adfc-1b6efe7822c2"/>
+			</line>
+			<textField pattern="EEEEE dd MMMMM yyyy">
+				<reportElement x="416" y="42" width="137" height="20" uuid="31dfba02-b9d0-494e-999a-3ff7c7d1b3ee"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="115" splitType="Stretch">
+			<rectangle>
+				<reportElement x="101" y="41" width="453" height="20" uuid="dfc4fb3d-10c8-4836-8d3a-477394afa4bc"/>
+				<graphicElement>
+					<pen lineWidth="0.25"/>
+				</graphicElement>
+			</rectangle>
+			<rectangle>
+				<reportElement x="101" y="21" width="453" height="20" uuid="635f2e4e-5df8-44ad-91c4-caa943e9f7b0"/>
+				<graphicElement>
+					<pen lineWidth="0.25"/>
+				</graphicElement>
+			</rectangle>
+			<textField>
+				<reportElement x="110" y="41" width="60" height="20" uuid="2ae6ef82-8be1-4b20-a48f-1ae81a7e7393"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{cadAgenda.instrutor.fabricante.marca}]]></textFieldExpression>
+			</textField>
+			<rectangle>
+				<reportElement x="1" y="1" width="100" height="20" uuid="6ff8838a-49ac-4f53-8752-f1546f3e790d"/>
+				<graphicElement>
+					<pen lineWidth="0.25"/>
+				</graphicElement>
+			</rectangle>
+			<staticText>
+				<reportElement x="6" y="1" width="86" height="20" uuid="81fe4911-650b-4074-b0c4-7871ea096015"/>
+				<textElement verticalAlignment="Middle">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Aluno:]]></text>
+			</staticText>
+			<rectangle>
+				<reportElement x="1" y="21" width="100" height="20" uuid="4934f6b1-aa45-4b8b-9b01-1a98ae43c153"/>
+				<graphicElement>
+					<pen lineWidth="0.25"/>
+				</graphicElement>
+			</rectangle>
+			<staticText>
+				<reportElement x="5" y="21" width="87" height="20" uuid="403f8c1c-f467-4b2a-9c33-ed5681da406d"/>
+				<textElement verticalAlignment="Middle">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Instrutor:]]></text>
+			</staticText>
+			<rectangle>
+				<reportElement x="1" y="41" width="100" height="20" uuid="97827ce5-1a9e-4d4f-a9f4-f66a547c1504"/>
+				<graphicElement>
+					<pen lineWidth="0.25"/>
+				</graphicElement>
+			</rectangle>
+			<staticText>
+				<reportElement x="5" y="41" width="87" height="20" uuid="abc14188-f218-4e60-8b49-c999d050745a"/>
+				<textElement verticalAlignment="Middle">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Veículo:]]></text>
+			</staticText>
+			<rectangle>
+				<reportElement x="101" y="1" width="453" height="20" uuid="4e694a95-31f5-498b-88e4-578332c348f0"/>
+				<graphicElement>
+					<pen lineWidth="0.25"/>
+				</graphicElement>
+			</rectangle>
+			<textField>
+				<reportElement x="110" y="0" width="433" height="20" uuid="67993bbe-06ca-4160-a963-57655d08e39b"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{cadAgenda.aluno.nome}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="110" y="21" width="433" height="20" uuid="95d0aa98-f0f3-436d-afd5-60ba46f29533"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{cadAgenda.instrutor.nome}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="193" y="41" width="350" height="20" uuid="fc323be9-058d-4694-bbda-924de39e62ce"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{cadAgenda.instrutor.fabricante.modelo}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="170" y="41" width="23" height="20" uuid="beec8d8e-d6fd-4ccf-8294-74c9bc51a1ce"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[-]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="76" width="553" height="20" uuid="a1d74282-c3d8-454e-83a4-79d8283fe70b"/>
+				<textElement textAlignment="Center">
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Horários Agendados ]]></text>
+			</staticText>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="33" splitType="Stretch">
+			<rectangle>
+				<reportElement x="0" y="0" width="555" height="21" backcolor="#F3F3F3" uuid="cbddcea3-945b-47fc-82b0-7480a51d3491"/>
+			</rectangle>
+			<staticText>
+				<reportElement x="40" y="1" width="64" height="20" uuid="2a87385f-ea95-4b4b-9f1a-30f941e3eb4d"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Código]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="103" y="1" width="189" height="20" uuid="755d95b3-3730-49c1-9296-cb27b063b00a"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Data]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="1" width="41" height="20" uuid="26ae9b93-9f51-4bbe-be2a-36e7676d55dc"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[#]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="292" y="1" width="85" height="20" uuid="45c336e3-d86f-4999-b937-d8f25c543482"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Início da Aula]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="377" y="1" width="69" height="20" uuid="2f928a54-48ba-4c21-8bd5-2998c37bad0d"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Fim]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="446" y="1" width="108" height="20" uuid="991b128c-852f-4f8b-b298-cd0b32b9528e"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Aulas Realizada]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="20" splitType="Stretch">
+			<textField>
+				<reportElement x="40" y="0" width="64" height="20" uuid="648b3a08-2113-4680-af42-ad27de21d7f7"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{id}]]></textFieldExpression>
+			</textField>
+			<textField pattern="EEEEE - dd MMMMM yyyy">
+				<reportElement x="110" y="0" width="182" height="20" uuid="49353229-38ff-414b-a1b9-dc385417290c"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{inicio}]]></textFieldExpression>
+			</textField>
+			<rectangle>
+				<reportElement x="15" y="5" width="10" height="11" uuid="d284a237-cf73-4dc0-866f-a75db50ee38b"/>
+			</rectangle>
+			<textField pattern="HH:mm">
+				<reportElement x="292" y="0" width="85" height="20" uuid="f6646434-6cc6-4da3-9db3-82fb61473541"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{inicio}]]></textFieldExpression>
+			</textField>
+			<textField pattern="HH:mm">
+				<reportElement x="377" y="0" width="69" height="20" uuid="dc7567ce-46ed-41ff-94cc-f32361ba58f7"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{fim}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="446" y="0" width="100" height="20" uuid="91560c7c-6b97-4a1f-81fe-d3e85c3966de"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{idStatus}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="36" splitType="Stretch">
+			<textField>
+				<reportElement x="525" y="10" width="29" height="20" uuid="a482a071-b1e0-4cc2-bc69-ba919c9d6de1"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="6" y="11" width="69" height="20" uuid="eb369595-9111-462e-92d8-e0bd4e3a3fb8"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA["Páginas "+$V{PAGE_NUMBER}+" de"]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="488" y="10" width="36" height="20" uuid="a07116c9-c288-4bee-8f27-99570c50945c"/>
+				<textElement verticalAlignment="Middle"/>
+				<text><![CDATA[Página]]></text>
+			</staticText>
+			<textField evaluationTime="Report">
+				<reportElement x="75" y="11" width="33" height="20" uuid="cf19e55e-5d14-42fc-bb1f-a53198219c02"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+		</band>
+	</columnFooter>
+	<pageFooter>
+		<band splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band splitType="Stretch"/>
+	</summary>
+</jasperReport>
